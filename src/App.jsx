@@ -32,13 +32,6 @@ const developerData = {
   details: "Matt Robinson is a child of God, a devoted husband, and a proud father of three beautiful girls and a God-sent son. His first ministry is his home, where he seeks to model the love, patience, and faithfulness of Christ.\n\nHe serves at the Church of God Sabbath-Keeping Ministries in Brampton as a teacher in the Christian Education Ministry and a youth leader in the Redeemed Youth Ministry. With a heart for discipleship, Matt is passionate about encouraging others, especially the next generation, to grow in faith and walk in their God-given purpose.",
 };
 
-// --- Custom Praying Hands SVG ---
-const PrayingHandsIcon = ({ color, size }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill={color} width={size} height={size}>
-    <path d="M174.7 43.8c-19.5-18.3-49.4-18.4-69 .1L50.4 97.4C34.4 112.5 24 133.5 24 156.4v75.6h-8c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h8v8c0 22.9 10.4 43.9 26.4 59.1l55.3 53.5V480c0 17.7 14.3 32 32 32h14.5c17.7 0 32-14.3 32-32v-58.4l115.8-93.5c12.1-9.8 19.3-24.6 19.3-40.1V128c0-35.3-28.7-64-64-64h-35.6c-11.7 0-23.2-3.2-33-9.3l-42-26.6c-4.9-3.1-10.9-3.2-15.9 .2zM465.3 43.8c19.5-18.3 49.4-18.4 69 .1L589.6 97.4c16 15.1 26.4 36.1 26.4 59.1v75.6h8c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16h-8v8c0 22.9-10.4 43.9-26.4 59.1l-55.3 53.5V480c0 17.7-14.3 32-32 32h-14.5c-17.7 0-32-14.3-32-32v-58.4l-115.8-93.5c-12.1-9.8-19.3-24.6-19.3-40.1V128c0-35.3 28.7-64 64-64h35.6c11.7 0 23.2-3.2 33-9.3l42-26.6c4.9-3.1 10.9-3.2 15.9 .2z"/>
-  </svg>
-);
-
 // --- Schedule Data (Extracted from FINAL PDF) ---
 const scheduleData = {
   friday: [
@@ -133,7 +126,7 @@ const scheduleData = {
 const IconRenderer = ({ name, color }) => {
   const icons = {
     Heart: <Heart color={color} size={20} />,
-    PrayingHands: <PrayingHandsIcon color={color} size={20} />,
+    PrayingHands: <img src="pray.png" alt="Prayer" style={{ width: 20, height: 20, objectFit: 'contain' }} />,
     Coffee: <Coffee color={color} size={20} />,
     Video: <Video color={color} size={20} />,
     MonitorPlay: <MonitorPlay color={color} size={20} />,
@@ -193,7 +186,7 @@ export default function App() {
     { id: 'sunday', label: 'Sunday', icon: <Calendar size={22} /> },
     { id: 'menu', label: 'Menu', icon: <Utensils size={22} /> },
     { id: 'feedback', label: 'Feedback', icon: <MessageSquare size={22} /> },
-    { id: 'prayer', label: 'Prayer', icon: <PrayingHandsIcon color="currentColor" size={22} /> }
+    { id: 'prayer', label: 'Prayer', icon: <img src="pray.png" alt="Prayer" style={{ width: 22, height: 22, objectFit: 'contain', filter: activeTab === 'prayer' ? 'none' : 'grayscale(100%) opacity(50%)', transition: 'all 0.3s' }} /> }
   ];
 
   return (
