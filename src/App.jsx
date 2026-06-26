@@ -19,72 +19,108 @@ const colors = {
   lightBg: '#f8fafc',
 };
 
-// --- Schedule Data (Extracted from PDF) ---
+// --- Schedule Data (Extracted from FINAL PDF) ---
 const scheduleData = {
   friday: [
-    { time: "4:00 PM - 5:30 PM", title: "Prayer Service", speaker: "Various", role: "Led by assigned leaders", icon: "Heart", isInteractive: true, details: "Not live streamed using the main zoom or YouTube link; will create secondary semi-private link." },
+    { time: "4:00 PM - 5:30 PM", title: "Prayer Service", speaker: "Bro. Marlon Palmer", role: "Song Leader: Pastor David Severin | Organist: Pastor Green", icon: "Heart", isInteractive: true, details: "Not live streamed using the main zoom or YouTube link; will create secondary semi-private link." },
     { time: "5:30 PM - 6:45 PM", title: "Dinner", speaker: "Lunchroom", role: "", icon: "Coffee" },
     { time: "6:35 PM - 6:50 PM", title: "Pre-Service Hosting", speaker: "Debbie Sargeant & Rennae Byfield", role: "Online Users", icon: "Video" },
     { time: "6:55 PM - 7:00 PM", title: "Official Convention Video", speaker: "", role: "Prerecorded", icon: "MonitorPlay" },
-    { time: "7:00 PM - 7:15 PM", title: "Praise and Worship", speaker: "Men's Ministries", role: "", icon: "Music" },
-    { time: "7:15 PM - 7:25 PM", title: "Opening Prayer & Scripture", speaker: "TBD", role: "", icon: "BookOpen", isInteractive: true, details: "Add bio and photo here..." },
-    { time: "7:25 PM - 7:45 PM", title: "Welcome Address & Testimonies", speaker: "TBD", role: "", icon: "Mic", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "7:00 PM - 7:15 PM", title: "Praise & Worship / Opening Song", speaker: "Men's Ministries", role: 'Hymnal #231 "To the Work"', icon: "Music" },
+    { time: "7:15 PM - 7:20 PM", title: "Opening Prayer", speaker: "Minister Andrew Rose", role: "", icon: "Heart", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "7:20 PM - 7:25 PM", title: "Scripture Reading", speaker: "Bro. Keaton Cole", role: "Matthew 10:1-20", icon: "BookOpen", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "7:25 PM - 7:35 PM", title: "Welcome Address & Intro to Presenter", speaker: "Pastor Mark Hibbert", role: "", icon: "Mic", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "7:35 PM - 7:45 PM", title: "Presentation: Business & Finance", speaker: "Bro. Franklin Fala", role: '"Perspectives on Business and Finance for the Ministry"', icon: "MonitorPlay", isInteractive: true, details: "Add bio and photo here..." },
     { time: "7:45 PM - 7:55 PM", title: "Offering", speaker: "Pastor Green", role: "", icon: "Heart", isInteractive: true, details: "Add bio and photo here..." },
-    { time: "7:55 PM - 8:10 PM", title: "Praise, Worship & Intro to Speaker", speaker: "TBD", role: "", icon: "Music" },
-    { time: "8:10 PM - 9:00 PM", title: "Main Sermon", speaker: "Minister Micheal Hall", role: "Topic: TBD", icon: "Mic", isInteractive: true, details: "Add bio and photo for Minister Micheal Hall here..." },
-    { time: "9:00 PM - 9:20 PM", title: "Altar Call & Prayer", speaker: "Minister Michael Hall", role: "", icon: "Heart" },
-    { time: "9:20 PM - 9:30 PM", title: "Vote of Thanks & Announcements", speaker: "TBD", role: "", icon: "Info" },
-    { time: "9:30 PM - 9:45 PM", title: "Post-Service Hosting", speaker: "Debbie Sargeant & Rennae Byfield", role: "Online Viewers", icon: "MessageCircle", isInteractive: true, details: "For online viewers only in a private room. Main purpose: if anyone made the decision to accept Christ, they can email to connect." }
+    { time: "7:55 PM - 8:00 PM", title: "Intro to Second Presenter", speaker: "Pastor David Severin (Moderator)", role: "", icon: "Mic", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "8:00 PM - 8:10 PM", title: "Presentation: Sacred Work", speaker: "Bro. Omari Rhoden", role: '"Sacred Work, Kingdom Business"', icon: "MonitorPlay", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "8:10 PM - 8:20 PM", title: "Praise and Worship", speaker: "", role: "", icon: "Music" },
+    { time: "8:20 PM - 8:25 PM", title: "Intro to Speaker", speaker: "Pastor David Severin", role: "", icon: "Mic", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "8:25 PM - 9:00 PM", title: "Main Sermon", speaker: "Minister Micheal Hall", role: '"Mission Critical Priorities for The Man of God"', icon: "Mic", isInteractive: true, details: "Add bio and photo for Minister Micheal Hall here..." },
+    { time: "9:00 PM - 9:20 PM", title: "Altar Call & Prayer", speaker: "Minister Michael Hall", role: "Altar workers organized by Sis. Anne Duff", icon: "Heart" },
+    { time: "9:20 PM - 9:25 PM", title: "Vote of Thanks", speaker: "Pastor Mark Hibbert", role: "", icon: "Info", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "9:25 PM - 9:30 PM", title: "Announcements", speaker: "Sis. Joanna Nichol", role: "", icon: "Info", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "9:30 PM - 9:45 PM", title: "Post-Service Hosting", speaker: "Debbie Sargeant & Rennae Byfield", role: "Online Viewers", icon: "MessageCircle", isInteractive: true, details: "For online viewers only in a private room. Main purpose: if anyone made the decision to accept Christ, they can email to connect. Venessa Roberts to handle mikes." }
   ],
   saturday: [
     { time: "8:00 AM - 9:00 AM", title: "Continental Breakfast", speaker: "DoZ Room", role: "", icon: "Coffee" },
-    { time: "8:30 AM - 9:50 AM", title: "Prayer Session", speaker: "Pastor Green (Organist)", role: "Live streamed separately", icon: "Heart", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "8:30 AM - 9:50 AM", title: "Prayer Session", speaker: "Pastor Hines", role: "Live streamed separately. Song leader: Praise Team | Organist: Pastor Green", icon: "Heart", isInteractive: true, details: "Add bio and photo here..." },
     { time: "9:00 AM - 10:00 AM", title: "Registration for Kids Classes", speaker: "Foyer", role: "Wristbands distributed", icon: "Users" },
     { time: "9:55 AM - 10:00 AM", title: "Official Convention Video", speaker: "", role: "Prerecorded", icon: "MonitorPlay" },
-    { time: "10:00 AM - 10:15 AM", title: "Welcome, Hymn & Prayer", speaker: "Morning Moderator", role: "Morning Service Starts", icon: "Mic", isInteractive: true, details: "Add bio and photo here..." },
-    { time: "10:15 AM - 11:35 AM", title: "Sabbath School", speaker: "TBD", role: "", icon: "BookOpen" },
-    { time: "11:35 AM - 11:50 AM", title: "Offering, Praise & Worship", speaker: "Pastor Green", role: "Includes Closing Hymn", icon: "Heart" },
-    { time: "11:50 AM - 12:00 PM", title: "Closing Remarks", speaker: "TBD", role: "Children reunited with parents", icon: "Info" },
+    { time: "10:00 AM - 10:05 AM", title: "Welcome & Dismissal", speaker: "Bro. David Smith (Morning Moderator)", role: "Dismiss children and youth to classes", icon: "Mic", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "10:05 AM - 10:10 AM", title: "Opening Hymn", speaker: "Congregation", role: '#92 "Sound the Battle Cry"', icon: "Music" },
+    { time: "10:10 AM - 10:15 AM", title: "Opening Prayer", speaker: "Assigned Leader", role: "", icon: "Heart" },
+    { time: "10:15 AM - 11:35 AM", title: "Sabbath School", speaker: "Pastor Clarence Duff", role: '"The Church as God\'s instrument"', icon: "BookOpen", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "11:35 AM - 11:40 AM", title: "Closing Hymn", speaker: "Congregation", role: '#94 "Onward Christian Soldiers"', icon: "Music" },
+    { time: "11:40 AM - 11:50 AM", title: "Offering, Praise & Worship", speaker: "Pastor Green", role: "", icon: "Heart", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "11:50 AM - 11:55 AM", title: "Closing Prayer", speaker: "Pastor Ricardo Severin", role: "", icon: "Heart", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "11:55 AM - 12:00 PM", title: "Closing Remarks & Dismissal", speaker: "Bro. David Smith", role: "Children reunited with parents", icon: "Info" },
     { time: "12:00 PM - 12:10 PM", title: "Pre-Service Hosting", speaker: "Chris Duff & Lydea Cousins", role: "Online Break", icon: "Video", isInteractive: true, details: "Add bios and photos here..." },
-    { time: "12:30 PM - 12:50 PM", title: "Worship Experience", speaker: "Sabbath Main Service", role: "", icon: "Music" },
-    { time: "12:50 PM - 1:05 PM", title: "Welcome, Prayer & Scripture", speaker: "TBD", role: "", icon: "BookOpen", isInteractive: true, details: "Add bio and photo here..." },
-    { time: "1:05 PM - 1:25 PM", title: "Offering & Worship", speaker: "Pastor Green", role: "", icon: "Heart" },
-    { time: "1:25 PM - 1:40 PM", title: "College Reminder", speaker: "TBD", role: "", icon: "Info", isInteractive: true, details: "Add bio and photo here..." },
-    { time: "1:40 PM - 1:50 PM", title: "Worship & Speaker Intro", speaker: "TBD", role: "", icon: "Music" },
-    { time: "1:50 PM - 2:40 PM", title: "Main Sermon", speaker: "Pastor Christopher McEwan", role: "", icon: "Mic", isInteractive: true, details: "Add bio and photo for Pastor Christopher McEwan here..." },
-    { time: "2:40 PM - 3:00 PM", title: "Hymn, Altar Call & Prayer", speaker: "TBD", role: "", icon: "Heart" },
-    { time: "3:00 PM - 3:05 PM", title: "Announcements", speaker: "TBD", role: "", icon: "Info" },
+    { time: "12:30 PM - 12:50 PM", title: "Worship Experience", speaker: "Sabbath Main Service", role: 'Hymn: #256 "I Am Resolved" & Dancers', icon: "Music" },
+    { time: "12:50 PM - 12:55 PM", title: "Opening Prayer", speaker: "Pastor Dion Mitchell", role: "", icon: "Heart", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "12:55 PM - 1:00 PM", title: "Scripture Reading", speaker: "Sis. Melleta Brown", role: "Matt 9:35-10:1", icon: "BookOpen", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "1:00 PM - 1:10 PM", title: "Official Welcome and Address", speaker: "Bishop Trelevan", role: "", icon: "Mic", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "1:10 PM - 1:20 PM", title: "Selection", speaker: "Sky Jewels United Choir", role: "", icon: "Music", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "1:20 PM - 1:35 PM", title: "Offering & Praise", speaker: "Pastor Green", role: "", icon: "Heart" },
+    { time: "1:35 PM - 1:40 PM", title: "Intro of Speaker", speaker: "Sis. Sheree Vernal", role: "", icon: "Mic", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "1:40 PM - 1:55 PM", title: "Worship Experience", speaker: "Worship Team", role: "", icon: "Music" },
+    { time: "1:55 PM - 2:40 PM", title: "Main Sermon", speaker: "Pastor Christopher McEwan", role: '"It\'s Harvest Time!"', icon: "Mic", isInteractive: true, details: "Add bio and photo for Pastor Christopher McEwan here..." },
+    { time: "2:40 PM - 2:45 PM", title: "Closing Song", speaker: "Praise and Worship", role: "", icon: "Music" },
+    { time: "2:45 PM - 3:00 PM", title: "Altar Call & Closing Prayer", speaker: "Pastor McEwan", role: "Altar workers organized by Sis. Anne Duff", icon: "Heart" },
+    { time: "3:00 PM - 3:05 PM", title: "Announcements", speaker: "Sis. Joanna Nichol", role: "", icon: "Info" },
     { time: "3:00 PM - 4:30 PM", title: "Official Lunch Break", speaker: "Lunchroom", role: "Waves for elderly/visitors/public", icon: "Coffee" },
-    { time: "4:30 PM - 6:00 PM", title: "Children's Ministries", speaker: "Children's Leaders", role: "", icon: "Users", isInteractive: true, details: "Includes Praise & Worship, Welcome, Selection, Scripture Reading, Interviews, Obstacle Course/Treasure Hunt, Sermon, and Vote of Thanks." },
-    { time: "6:30 PM", title: "Singspiration", speaker: "Ottawa Musicians & Singers", role: "Informal service", icon: "Music" }
+    { time: "4:30 PM - 4:35 PM", title: "Children's Praise & Worship", speaker: "Children's Ministry", role: "Sub-theme: Workers for the Kingdom!", icon: "Music" },
+    { time: "4:35 PM - 4:44 PM", title: "Welcome, Prayer & Scripture", speaker: "Syracuse, Nyla Olivierre & Oshawa", role: "Scripture: Matt 9:37-38", icon: "BookOpen" },
+    { time: "4:44 PM - 4:59 PM", title: "Skit", speaker: "Rexdale Congregation", role: "", icon: "Users" },
+    { time: "4:59 PM - 5:18 PM", title: "Declaration & Choir", speaker: "Everyone", role: "", icon: "Music" },
+    { time: "5:18 PM - 5:33 PM", title: "Interactive Activity", speaker: "1st to ten", role: "", icon: "Users" },
+    { time: "5:33 PM - 6:03 PM", title: "Selection, Worship & Sermon", speaker: "Brampton Dancers & Kendell Harrison", role: "Sermon at 5:48 PM", icon: "Mic", isInteractive: true, details: "Add bio and photo for Kendell Harrison here..." },
+    { time: "6:03 PM - 6:15 PM", title: "Closing Prayer & Vote of Thanks", speaker: "Azariah Providence & Sis. Nadia Lake", role: "", icon: "Heart" },
+    { time: "6:30 PM", title: "Singspiration", speaker: "Venessa Roberts & Keddy Mitchell", role: "Musicians: Ottawa. Informal service of song and worship.", icon: "Music" }
   ],
   sunday: [
-    { time: "8:00 AM - 9:30 AM", title: "Prayer Session", speaker: "Pastor Green (Organist)", role: "", icon: "Heart" },
+    { time: "8:00 AM - 9:30 AM", title: "Prayer Session", speaker: "Pastor Hibbert", role: "Song Leader: Sis. Rhoda Leone | Organist: Pastor Green", icon: "Heart", isInteractive: true, details: "Add bio and photo here..." },
     { time: "9:30 AM - 10:40 AM", title: "Breakfast", speaker: "", role: "", icon: "Coffee" },
     { time: "10:55 AM - 11:00 AM", title: "Official Convention Video", speaker: "", role: "Prerecorded", icon: "MonitorPlay" },
-    { time: "11:00 AM - 12:20 PM", title: "Ministerial Workshop", speaker: "Pastor Green", role: "Closing remarks 12:15 PM", icon: "BookOpen", isInteractive: true, details: "Add bio and photo here..." },
-    { time: "12:30 PM - 2:30 PM", title: "Women's Ministry", speaker: "Sis. C. Cousins (Moderator)", role: "Women at Work", icon: "Users", isInteractive: true, details: "Title: 'Women at Work in the Home, in the Workplace, and in the Community.' Includes 3 small groups formed with 3 facilitators to discuss family, work, and community." },
+    { time: "11:00 AM - 11:05 AM", title: "Intro to Speaker", speaker: "Bro. Glenford Lee", role: "Ministerial Workshop", icon: "Mic", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "11:05 AM - 12:15 PM", title: "Workshop Presentation", speaker: "Pastor Maurice Blagrove", role: '"Prioritizing the Work of the Kingdom" 1 Cor 3:1-13', icon: "BookOpen", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "12:15 PM - 12:20 PM", title: "Closing Remarks", speaker: "Pastor Green", role: "", icon: "Info" },
+    { time: "12:30 PM - 12:45 PM", title: "Women's Praise & Video Presentation", speaker: "Women's Ministry", role: "Priscilla Shirer videos", icon: "MonitorPlay" },
+    { time: "12:45 PM - 1:10 PM", title: "Welcome, Hymn, Prayer & Scripture", speaker: "Sis C. Cousins, Sis M. Gooden, Sis S. Kerr, Sis M. Ricketts", role: 'Scripture: John 9:4-5 | Hymn #231', icon: "BookOpen", isInteractive: true, details: "Add bios and photos here..." },
+    { time: "1:10 PM - 1:20 PM", title: "Praise & Worship", speaker: "Worship Team", role: "", icon: "Music" },
+    { time: "1:20 PM - 2:15 PM", title: "Discussion & Wrap-up", speaker: "Sis. Rhoda Leone, Sis. Crystal Chambers, Sis. Kimberley Cameron", role: "", icon: "Users", isInteractive: true, details: "Add bios and photos here..." },
+    { time: "2:15 PM - 2:35 PM", title: "Altar Call, Vote of Thanks & Announcements", speaker: "Sis L. Quarrie, Sis M. Brown, Sis Joanna Nichol", role: "", icon: "Heart", isInteractive: true, details: "Add bios and photos here..." },
     { time: "2:35 PM - 3:00 PM", title: "Break", speaker: "Intermission", role: "", icon: "Coffee" },
-    { time: "3:00 PM - 3:50 PM", title: "Conference Update", speaker: "Executive Team", role: "Members only (Zoom)", icon: "Video", isInteractive: true, details: "Add bios and photos here..." },
-    { time: "4:00 PM - 7:00 PM", title: "Vendor Booth Expo", speaker: "Expo Room", role: "Brethren to support", icon: "Info" },
-    { time: "4:00 PM - 4:10 PM", title: "Youth Worship", speaker: "Youth Worship Team", role: "Fast songs", icon: "Music" },
-    { time: "4:10 PM - 4:19 PM", title: "Prayer, Scripture & Welcome", speaker: "TBD", role: "", icon: "BookOpen", isInteractive: true, details: "Add bio and photo here..." },
-    { time: "4:19 PM - 5:00 PM", title: "Panel Discussion", speaker: "TBD", role: "", icon: "Users", isInteractive: true, details: "Add bios for panel members here..." },
-    { time: "5:00 PM - 5:05 PM", title: "Presentation", speaker: "TBD", role: "", icon: "MonitorPlay", isInteractive: true, details: "Add bio and photo here..." },
-    { time: "5:05 PM - 5:25 PM", title: "Altar Call & Prayer", speaker: "Worship Team", role: "", icon: "Heart" },
-    { time: "5:25 PM - 5:30 PM", title: "Vote of Thanks", speaker: "TBD", role: "", icon: "Info" },
+    { time: "3:00 PM - 3:50 PM", title: "Conference Update", speaker: "Pastor Howard Green & Pastor Maurice Blagrove", role: "Members only (Zoom)", icon: "Video", isInteractive: true, details: "Add bios and photos here..." },
+    { time: "4:00 PM - 7:00 PM", title: "Vendor Booth Expo", speaker: "New Room", role: "Brethren to support", icon: "Info" },
+    { time: "4:00 PM - 4:19 PM", title: "Youth Worship, Prayer, Scripture & Welcome", speaker: "Aliyah Valentine, Desreen Myers, Jonathan Brown", role: "Sub-theme: Kingdom Work for Your Generation", icon: "BookOpen", isInteractive: true, details: "Add bios and photos here..." },
+    { time: "4:19 PM - 5:04 PM", title: "Youth Panel Discussion", speaker: "Minister Matt-Tril Chambers (Facilitator)", role: "5-6 Panelists", icon: "Users", isInteractive: true, details: "Add bios for panel members here..." },
+    { time: "5:04 PM - 5:30 PM", title: "Altar Call, Prayer & Vote of Thanks", speaker: "Deneil Wilmot & Tianna Hibbert", role: "", icon: "Heart", isInteractive: true, details: "Add bios and photos here..." },
     { time: "5:35 PM - 6:35 PM", title: "Dinner", speaker: "", role: "Intermission", icon: "Coffee" },
     { time: "6:50 PM - 7:00 PM", title: "Pre-Service Hosting", speaker: "Shawn Wallace & Antonette Whitley-Scott", role: "Online Viewers", icon: "Video", isInteractive: true, details: "Add bios and photos here..." },
-    { time: "7:00 PM - 7:15 PM", title: "Praise & Worship", speaker: "TBD", role: "Gospel Service", icon: "Music" },
-    { time: "7:15 PM - 7:30 PM", title: "Welcome, Prayer & Scripture", speaker: "TBD", role: "", icon: "BookOpen", isInteractive: true, details: "Add bio and photo here..." },
-    { time: "7:30 PM - 7:55 PM", title: "Love Offering & Worship", speaker: "Pastor Green", role: "", icon: "Heart", isInteractive: true, details: "Add bio and photo here..." },
-    { time: "7:55 PM - 8:15 PM", title: "Worship Experience & Intro", speaker: "TBD", role: "", icon: "Music" },
-    { time: "8:15 PM - 9:00 PM", title: "Sermon", speaker: "Pastor Chris McEwan", role: "", icon: "Mic", isInteractive: true, details: "Add bio and photo for Pastor Chris McEwan here..." },
-    { time: "9:00 PM - 9:15 PM", title: "Altar Call & Closing Prayer", speaker: "Pastor Chris McEwan", role: "Includes Closing Hymn", icon: "Heart" },
-    { time: "9:15 PM - 9:30 PM", title: "Vote of Thanks & Gift Presentation", speaker: "Pastor Green / Joanna Nichol / Pastor D Severin", role: "", icon: "Users", isInteractive: true, details: "Add bios and photos here..." },
-    { time: "9:30 PM - 9:40 PM", title: "Announcements", speaker: "TBD", role: "Slide of major events", icon: "Info" },
+    { time: "7:00 PM - 7:25 PM", title: "Praise, Prayer & Scripture", speaker: "Pastor Louis George & Sis. Marcia Gooden", role: 'Hymn #226 "Send the Light" | Matt 20:1-13', icon: "BookOpen", isInteractive: true, details: "Add bios and photos here..." },
+    { time: "7:25 PM - 7:45 PM", title: "Official Welcome & Selection", speaker: "Sis. Rhoda Leone & Sky Jewels United Choir", role: "", icon: "Music", isInteractive: true, details: "Add bios and photos here..." },
+    { time: "7:45 PM - 8:00 PM", title: "Love Offering", speaker: "Pastor Green", role: "", icon: "Heart" },
+    { time: "8:00 PM - 8:15 PM", title: "Worship & Intro to Speaker", speaker: "Sis. Michaela Simpson", role: "", icon: "Mic", isInteractive: true, details: "Add bio and photo here..." },
+    { time: "8:15 PM - 9:00 PM", title: "Sermon", speaker: "Pastor Christopher McEwan", role: '"Fix Your Focus"', icon: "Mic", isInteractive: true, details: "Add bio and photo for Pastor Chris McEwan here..." },
+    { time: "9:00 PM - 9:15 PM", title: "Altar Call & Closing Prayer", speaker: "Pastor Chris McEwan", role: "Altar workers organized by Sis. Anne Duff", icon: "Heart" },
+    { time: "9:15 PM - 9:30 PM", title: "Vote of Thanks", speaker: "Pastor Green / Joanna Nichol / Pastor D Severin", role: "", icon: "Users", isInteractive: true, details: "Add bios and photos here..." },
+    { time: "9:30 PM - 9:40 PM", title: "Announcements", speaker: "Sis. Latoya Graham", role: "Slide of major events across the conference", icon: "Info", isInteractive: true, details: "Add bio and photo here..." },
     { time: "9:40 PM - 9:50 PM", title: "Post-Service Hosting", speaker: "Shawn Wallace & Antonette Whitley-Scott", role: "Official Close", icon: "MessageCircle", isInteractive: true, details: "For online viewers only in a private room. Main purpose: if anyone made the decision to accept Christ, they can text a number to connect." }
   ]
+};
+
+// --- Custom Developer Data ---
+const developerData = {
+  time: null,
+  title: "App Developer",
+  speaker: "Bro. Matt Robinson",
+  role: "Servant of God",
+  icon: "MonitorPlay",
+  isInteractive: true,
+  image: "/me.jpg",
+  link: "https://mattrobinsondeveloper.com/",
+  details: "Matt Robinson is a child of God, a devoted husband, and a proud father of three beautiful girls and a God-sent son. His first ministry is his home, where he seeks to model the love, patience, and faithfulness of Christ.\n\nHe serves at the Church of God Sabbath-Keeping Ministries in Brampton as a teacher in the Christian Education Ministry and a youth leader in the Redeemed Youth Ministry. With a heart for discipleship, Matt is passionate about encouraging others, especially the next generation, to grow in faith and walk in their God-given purpose.",
 };
 
 const IconRenderer = ({ name, color }) => {
@@ -157,14 +193,14 @@ export default function App() {
       
       {/* --- OVERLAY SCREEN --- */}
       <div 
-        className={`fixed inset-0 z-[60] flex flex-col items-center justify-center p-6 text-center transition-all duration-700 transform ${showOverlay ? 'opacity-100 translate-y-0' : 'opacity-0 pointer-events-none -translate-y-10'}`}
-        style={{ background: `linear-gradient(135deg, ${colors.darkBlue} 0%, ${colors.primaryBlue} 100%)` }}
+        className={`fixed inset-0 z-[60] overflow-y-auto transition-all duration-700 transform ${showOverlay ? 'opacity-100 translate-y-0' : 'opacity-0 pointer-events-none -translate-y-10'}`}
+        style={{ background: `linear-gradient(135deg, ${colors.darkBlue} 0%, ${colors.primaryBlue} 100%)`, WebkitOverflowScrolling: 'touch' }}
       >
-        <div className="max-w-md w-full text-white space-y-8 animate-fade-in-up">
-          <div className="mb-2">
-            <p className="uppercase tracking-[0.3em] text-xs font-bold text-[#cb9d44] mb-2">Convention 2026</p>
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Focus on the Work of the Kingdom</h1>
-            <p className="text-lg opacity-80 font-light italic text-[#e7b42c]">July 3 - 5, 2026</p>
+        <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+          <div className="max-w-md w-full text-white space-y-8 animate-fade-in-up py-8">
+            <div className="mb-2">
+              <p className="uppercase tracking-[0.3em] text-xs font-bold text-[#cb9d44] mb-2">Convention 2026</p>
+              <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Focus on the Work of the Kingdom</h1>
           </div>
 
           <div className="space-y-4 w-full mt-8">
@@ -220,7 +256,7 @@ export default function App() {
                 </div>
               </div>
               <div className="bg-[#cb9d44]/15 rounded-full p-2 group-hover:bg-[#cb9d44]/30 transition-colors">
-                <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x" />
+                <ChevronRight size={20} className="text-[#e7b42c] animate-bounce-x" />
               </div>
             </button>
 
@@ -238,12 +274,33 @@ export default function App() {
                 </div>
               </div>
               <div className="bg-[#cb9d44]/15 rounded-full p-2 group-hover:bg-[#cb9d44]/30 transition-colors">
+                <ChevronRight size={20} className="text-[#cf6e2a] animate-bounce-x" />
+              </div>
+            </button>
+            
+            {/* APP DEVELOPER BUTTON */}
+            <button 
+              onClick={() => setModalData(developerData)}
+              className="w-full flex items-center justify-between px-6 py-4 rounded-2xl bg-[#c4442b]/20 hover:bg-[#c4442b]/40 border border-[#c4442b]/30 transition-all active:scale-95 group mt-6 shadow-lg"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-[#c4442b] flex items-center justify-center shadow-inner">
+                  <MonitorPlay size={20} className="text-white" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-bold text-lg text-white">App Developer</h3>
+                  <p className="text-xs text-white/60 font-medium tracking-wide">Bro. Matt Robinson</p>
+                </div>
+              </div>
+              <div className="bg-[#cb9d44]/15 rounded-full p-2 group-hover:bg-[#cb9d44]/30 transition-colors">
                 <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x" />
               </div>
             </button>
+
           </div>
         </div>
       </div>
+    </div>
 
       {/* --- MAIN CONTENT --- */}
       <div className={`transition-opacity duration-700 delay-300 ${showOverlay ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100 min-h-screen relative'}`}>
@@ -618,13 +675,23 @@ export default function App() {
             </button>
             
             <div className="p-8 pb-4" style={{ backgroundColor: `${colors.primaryBlue}10` }}>
-              <div 
-                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-sm"
-                style={{ backgroundColor: colors.gold }}
-              >
-                <IconRenderer name={modalData.icon} color="#ffffff" />
-              </div>
-              <p className="text-xs uppercase tracking-widest font-bold mb-1" style={{ color: colors.rust }}>{modalData.time}</p>
+              {modalData.image ? (
+                <div 
+                  className="w-20 h-20 rounded-2xl mb-4 shadow-md border-2 border-white bg-cover bg-center"
+                  style={{ backgroundImage: `url(${modalData.image})` }}
+                ></div>
+              ) : (
+                <div 
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-sm"
+                  style={{ backgroundColor: colors.gold }}
+                >
+                  <IconRenderer name={modalData.icon} color="#ffffff" />
+                </div>
+              )}
+              
+              {modalData.time && (
+                <p className="text-xs uppercase tracking-widest font-bold mb-1" style={{ color: colors.rust }}>{modalData.time}</p>
+              )}
               <h2 className="text-2xl font-extrabold text-[#111b2e] leading-tight">{modalData.title}</h2>
               {modalData.speaker && (
                 <p className="text-md font-medium mt-2" style={{ color: colors.primaryBlue }}>{modalData.speaker}</p>
@@ -638,6 +705,17 @@ export default function App() {
                 </div>
               ) : (
                 <p className="text-sm text-gray-500 italic text-center py-6">No additional details available for this session.</p>
+              )}
+              
+              {modalData.link && (
+                <a 
+                  href={modalData.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="mt-8 flex items-center justify-center w-full px-6 py-4 bg-[#0f1a82] text-white font-bold rounded-xl shadow-lg hover:bg-[#111b2e] transition-colors active:scale-95 gap-2"
+                >
+                  <MonitorPlay size={18} /> View Portfolio
+                </a>
               )}
             </div>
           </div>
