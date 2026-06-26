@@ -126,7 +126,7 @@ const scheduleData = {
 const IconRenderer = ({ name, color }) => {
   const icons = {
     Heart: <Heart color={color} size={20} />,
-    PrayingHands: <img src="pray.png" alt="Prayer" style={{ width: 20, height: 20, objectFit: 'contain' }} />,
+    PrayingHands: <img src="/pray-1.png" alt="Prayer" style={{ width: 20, height: 20, objectFit: 'contain' }} />,
     Coffee: <Coffee color={color} size={20} />,
     Video: <Video color={color} size={20} />,
     MonitorPlay: <MonitorPlay color={color} size={20} />,
@@ -186,7 +186,7 @@ export default function App() {
     { id: 'sunday', label: 'Sunday', icon: <Calendar size={22} /> },
     { id: 'menu', label: 'Menu', icon: <Utensils size={22} /> },
     { id: 'feedback', label: 'Feedback', icon: <MessageSquare size={22} /> },
-    { id: 'prayer', label: 'Prayer', icon: <img src="pray.png" alt="Prayer" style={{ width: 22, height: 22, objectFit: 'contain', filter: activeTab === 'prayer' ? 'none' : 'grayscale(100%) opacity(50%)', transition: 'all 0.3s' }} /> }
+    { id: 'prayer', label: 'Prayer', icon: <img src="/pray-1.png" alt="Prayer" style={{ width: 22, height: 22, objectFit: 'contain', filter: activeTab === 'prayer' ? 'none' : 'grayscale(100%) opacity(50%)', transition: 'all 0.3s' }} /> }
   ];
 
   return (
