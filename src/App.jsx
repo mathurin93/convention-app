@@ -348,8 +348,10 @@ export default function App() {
 
               {/* Interactive Nudge */}
               {event.isInteractive && (
-                <div className="flex-shrink-0 pt-4">
-                  <ChevronRight size={20} className="text-gray-300 transition-transform group-hover:text-[#cb9d44]" />
+                <div className="flex-shrink-0 pt-2 flex items-center justify-center h-full">
+                  <div className="bg-[#cb9d44]/15 rounded-full p-2 shadow-sm">
+                    <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x drop-shadow-sm" />
+                  </div>
                 </div>
               )}
             </div>
@@ -662,6 +664,13 @@ export default function App() {
         }
         .animate-scale-in {
           animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes bounce-x {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(4px); }
+        }
+        .animate-bounce-x {
+          animation: bounce-x 1.5s infinite ease-in-out;
         }
         .no-scrollbar::-webkit-scrollbar {
           display: none;
