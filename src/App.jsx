@@ -109,7 +109,7 @@ const IconRenderer = ({ name, color }) => {
 
 export default function App() {
   const [showOverlay, setShowOverlay] = useState(true);
-  const [activeTab, setActiveTab] = useState('message'); // Defaulting to message to showcase the new tab
+  const [activeTab, setActiveTab] = useState('message');
   const [modalData, setModalData] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
@@ -120,13 +120,11 @@ export default function App() {
   }, []);
 
   const handleDaySelect = (day) => {
-    // Prevent animating/scrolling if we are already on the selected tab
     if (day === activeTab && !showOverlay) return;
     
     setActiveTab(day);
     setShowOverlay(false);
     
-    // Slight delay ensures the DOM has swapped before scrolling smoothly to the top
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 10);
@@ -165,7 +163,7 @@ export default function App() {
         <div className="max-w-md w-full text-white space-y-8 animate-fade-in-up">
           <div className="mb-2">
             <p className="uppercase tracking-[0.3em] text-xs font-bold text-[#cb9d44] mb-2">Convention 2026</p>
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">A Weekend of Renewal</h1>
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Focus on the Work of the Kingdom</h1>
             <p className="text-lg opacity-80 font-light italic text-[#e7b42c]">July 3 - 5, 2026</p>
           </div>
 
@@ -185,7 +183,9 @@ export default function App() {
                   <p className="text-xs text-white/60">Read the President's Letter</p>
                 </div>
               </div>
-              <ChevronRight className="text-[#cb9d44] group-hover:translate-x-1 transition-transform" />
+              <div className="bg-[#cb9d44]/15 rounded-full p-2 group-hover:bg-[#cb9d44]/30 transition-colors">
+                <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x" />
+              </div>
             </button>
 
             <button 
@@ -201,7 +201,9 @@ export default function App() {
                   <p className="text-xs text-white/60">July 3 • Evening Service</p>
                 </div>
               </div>
-              <ChevronRight className="text-[#cb9d44] group-hover:translate-x-1 transition-transform" />
+              <div className="bg-[#cb9d44]/15 rounded-full p-2 group-hover:bg-[#cb9d44]/30 transition-colors">
+                <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x" />
+              </div>
             </button>
 
             <button 
@@ -217,7 +219,9 @@ export default function App() {
                   <p className="text-xs text-white/60">July 4 • Full Day</p>
                 </div>
               </div>
-              <ChevronRight className="text-[#e7b42c] group-hover:translate-x-1 transition-transform" />
+              <div className="bg-[#cb9d44]/15 rounded-full p-2 group-hover:bg-[#cb9d44]/30 transition-colors">
+                <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x" />
+              </div>
             </button>
 
             <button 
@@ -233,7 +237,9 @@ export default function App() {
                   <p className="text-xs text-white/60">July 5 • Final Day</p>
                 </div>
               </div>
-              <ChevronRight className="text-[#cf6e2a] group-hover:translate-x-1 transition-transform" />
+              <div className="bg-[#cb9d44]/15 rounded-full p-2 group-hover:bg-[#cb9d44]/30 transition-colors">
+                <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x" />
+              </div>
             </button>
           </div>
         </div>
@@ -248,14 +254,13 @@ export default function App() {
           style={{ background: `linear-gradient(135deg, ${colors.darkBlue} 0%, ${colors.primaryBlue} 100%)` }}
         >
           <p className="uppercase tracking-[0.3em] text-[10px] mb-2 font-bold text-[#cb9d44]">Convention 2026</p>
-          <h1 className="text-3xl md:text-5xl font-extrabold mb-3">Schedule of Events</h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold mb-3">Focus on the Work of the Kingdom</h1>
           <div className="flex items-center justify-center gap-2 text-sm font-medium text-white/80">
             <Calendar size={14} /> July 3 - 5, 2026
           </div>
         </header>
 
         {/* Schedule List & Pages */}
-        {/* Adding key={activeTab} forces React to remount this container, re-triggering all entrance animations */}
         <main key={activeTab} className="max-w-2xl mx-auto px-4 py-8 pb-32 md:pb-8 space-y-4 animate-tab-switch">
           
           {/* WELCOME MESSAGE PAGE */}
@@ -319,7 +324,7 @@ export default function App() {
               key={index}
               onClick={() => event.isInteractive && setModalData(event)}
               className={`bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex items-start gap-4 transition-all duration-300 ${
-                event.isInteractive ? 'cursor-pointer hover:-translate-y-1 hover:shadow-md hover:border-[#cb9d44]' : ''
+                event.isInteractive ? 'cursor-pointer hover:-translate-y-1 hover:shadow-md hover:border-[#cb9d44] group' : ''
               }`}
               style={{ animation: `fadeInUp 0.4s ease-out ${index * 0.05}s both` }}
             >
@@ -348,9 +353,9 @@ export default function App() {
 
               {/* Interactive Nudge */}
               {event.isInteractive && (
-                <div className="flex-shrink-0 pt-2 flex items-center justify-center h-full">
-                  <div className="bg-[#cb9d44]/15 rounded-full p-2 shadow-sm">
-                    <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x drop-shadow-sm" />
+                <div className="flex-shrink-0 pt-4">
+                  <div className="bg-[#cb9d44]/15 rounded-full p-2 group-hover:bg-[#cb9d44]/30 transition-colors">
+                    <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x" />
                   </div>
                 </div>
               )}
@@ -653,6 +658,13 @@ export default function App() {
           from { opacity: 0; transform: scale(0.95); }
           to { opacity: 1; transform: scale(1); }
         }
+        @keyframes bounce-x {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(4px); }
+        }
+        .animate-bounce-x {
+          animation: bounce-x 2s infinite ease-in-out;
+        }
         .animate-fade-in-up {
           animation: fadeInUp 0.8s ease-out forwards;
         }
@@ -664,13 +676,6 @@ export default function App() {
         }
         .animate-scale-in {
           animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes bounce-x {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(4px); }
-        }
-        .animate-bounce-x {
-          animation: bounce-x 1.5s infinite ease-in-out;
         }
         .no-scrollbar::-webkit-scrollbar {
           display: none;
