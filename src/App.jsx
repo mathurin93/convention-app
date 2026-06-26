@@ -707,7 +707,7 @@ export default function App() {
             
             <div className="p-8 pb-4" style={{ backgroundColor: `${colors.primaryBlue}10` }}>
               <div 
-                className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-4 shadow-sm bg-cover bg-center border-2 border-white`}
+                className={`w-32 h-32 rounded-2xl flex items-center justify-center mb-4 shadow-md bg-cover bg-center border-4 border-white`}
                 style={modalData.image ? { backgroundImage: `url('${modalData.image}')` } : { backgroundColor: colors.gold }}
               >
                 {!modalData.image && <IconRenderer name={modalData.icon} color="#ffffff" />}
@@ -722,12 +722,10 @@ export default function App() {
             </div>
             
             <div className="p-8 pt-4 overflow-y-auto">
-              {modalData.details ? (
-                <div className="prose prose-sm text-gray-600 whitespace-pre-line leading-relaxed">
+              {modalData.details && (
+                <div className="prose prose-sm text-gray-600 whitespace-pre-line leading-relaxed mb-4">
                   {modalData.details}
                 </div>
-              ) : (
-                <p className="text-sm text-gray-500 italic text-center py-6">No additional details available for this session.</p>
               )}
 
               {modalData.link && (
