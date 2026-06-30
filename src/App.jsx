@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Heart,
   HandHeart,
@@ -25,6 +25,9 @@ import {
   Clock,
   Star,
   ExternalLink,
+  Home,
+  ChevronDown,
+  ChevronsLeftRight,
 } from 'lucide-react';
 
 const colors = {
@@ -42,14 +45,14 @@ const colors = {
 
 const conventionStartDate = new Date('2026-07-03T16:00:00');
 
-const prayerZoomUrl = '';
+const prayerZoomUrl = 'https://us02web.zoom.us/j/89150780802?pwd=R2dHQjB3clNnSWgzZHFsTEJzUGV4dz09';
 const prayerZoomLabel = 'Open Prayer Zoom Link';
 
 const hostingDetails =
   'Online Users only. Hosts will welcome online viewers, help guide them through the service, share key announcements, and direct anyone who would like to connect after the service.';
 
 const prayerDetails =
-  'This prayer service will be live streamed separately from the main Zoom or YouTube service link.';
+  'This prayer service will be live streamed separately from the main Zoom or YouTube service link.\n\nMeeting ID: 891 5078 0802\nPasscode: 123456';
 
 const dayDates = {
   friday: '2026-07-03',
@@ -89,8 +92,10 @@ const peopleImages = {
   howardGreen: 'Howard Green.jpeg',
   joannaNichol: 'Joanna Nichol.jpeg',
   latoyaGraham: 'Latoya Graham.jpeg',
+  louisGeorge: 'Louis George.jpg',
   lydeaCousins: 'Lydea Cousins.jpeg',
   markHibbert: 'Mark Hibbert.jpeg',
+  marlonPalmer: 'Marlon Palmer.jpg',
   mattTrillChambers: 'Matt-Trill Chambers.jpeg',
   mauriceBlagrove: 'Maurice Blagrove.jpeg',
   me: 'me.jpg',
@@ -98,14 +103,17 @@ const peopleImages = {
   mrFranklinFala: 'Mr. Franklin Fala.jpeg',
   mrOmariRhoden: 'Mr. Omari Rhoden.jpeg',
   nadiaLake: 'Nadia lake.jpeg',
+  pastorHines: 'Pastor Hines.jpg',
   praiseAndWorshipTeam: 'Praise and worship team.jpeg',
   prayerIcon: 'pray-1.png',
   rennaeByfield: 'Rennae Byfield.jpeg',
+  ricardoSeverin: 'Ricardo Severin.jpg',
   shawnWallace: 'Shawn Wallace.jpeg',
+  skyJewels: 'Sky Jewels United Choir.jpg',
 };
 
 const developerData = {
-  title: 'App Developer',
+  title: 'App Creator',
   speaker: 'Bro. Matt Robinson',
   role: 'Servant of God',
   icon: 'MonitorPlay',
@@ -125,6 +133,7 @@ const scheduleData = {
       speaker: 'Bro. Marlon Palmer',
       role: 'Live streamed separately',
       icon: 'PrayingHands',
+      image: peopleImages.marlonPalmer,
       isInteractive: true,
       details: prayerDetails,
       link: prayerZoomUrl || undefined,
@@ -285,6 +294,7 @@ const scheduleData = {
       speaker: 'Pastor Hines',
       role: 'Live streamed separately',
       icon: 'PrayingHands',
+      image: peopleImages.pastorHines,
       isInteractive: true,
       details: prayerDetails,
       link: prayerZoomUrl || undefined,
@@ -353,6 +363,7 @@ const scheduleData = {
           title: 'Closing Prayer',
           speaker: 'Pastor Ricardo Severin',
           icon: 'PrayingHands',
+          image: peopleImages.ricardoSeverin,
           isInteractive: true,
         },
         {
@@ -361,7 +372,6 @@ const scheduleData = {
           role: 'Children reunited with parents',
           icon: 'Info',
           image: peopleImages.davidSmith,
-          isInteractive: true,
         },
       ],
     },
@@ -407,7 +417,7 @@ const scheduleData = {
         },
         {
           title: 'Official Welcome and Address',
-          speaker: 'Bishop Trelevan',
+          speaker: 'Bishop Treleven',
           icon: 'Mic',
           isInteractive: true,
         },
@@ -415,6 +425,7 @@ const scheduleData = {
           title: 'Selection',
           speaker: 'Sky Jewels United Choir',
           icon: 'Music',
+          image: peopleImages.skyJewels,
           isInteractive: true,
         },
         {
@@ -527,7 +538,7 @@ const scheduleData = {
     {
       title: 'Singspiration',
       time: '6:30 PM',
-      speaker: 'Venessa Roberts & Keddy Mitchell',
+      speaker: 'Venessa White & Kedeisha Mitchell',
       role: 'Informal service of song and worship',
       icon: 'Music',
     },
@@ -669,11 +680,21 @@ const scheduleData = {
         'Youth service under the sub-theme: Kingdom Work for Your Generation.',
       items: [
         {
-          title: 'Youth Worship, Prayer, Scripture & Welcome',
+          title: 'Youth P&W',
+          speaker: 'Youth Ministry',
+          icon: 'Music',
+        },
+        {
+          title: 'Prayer & Scripture',
           speaker: 'Aliyah Valentine, Desreen Myers, Jonathan Brown',
           role: 'Sub-theme: Kingdom Work for Your Generation',
           icon: 'BookOpen',
           isInteractive: true,
+        },
+        {
+          title: 'Welcome',
+          speaker: 'Youth Ministry',
+          icon: 'Mic',
         },
         {
           title: 'Youth Panel Discussion',
@@ -685,7 +706,7 @@ const scheduleData = {
         },
         {
           title: 'Altar Call, Prayer & Vote of Thanks',
-          speaker: 'Deneil Wilmot & Tianna Hibbert',
+          speaker: 'Deneil Wilmot & Lianna Hibbert',
           icon: 'PrayingHands',
           isInteractive: true,
         },
@@ -719,16 +740,18 @@ const scheduleData = {
       details: 'Final evening service for Convention 2026.',
       items: [
         {
-          title: 'Praise, Prayer & Scripture',
+          title: 'Praise and Worship, Prayer & Scripture',
           speaker: 'Pastor Louis George & Sis. Marcia Gooden',
           role: 'Hymn #226 "Send the Light" | Matt 20:1-13',
           icon: 'BookOpen',
+          image: peopleImages.louisGeorge,
           isInteractive: true,
         },
         {
           title: 'Official Welcome & Selection',
           speaker: 'Sis. Rhoda Leone & Sky Jewels United Choir',
           icon: 'Music',
+          image: peopleImages.skyJewels,
           isInteractive: true,
         },
         {
@@ -1109,12 +1132,83 @@ export default function App() {
   const [prayerSubmitted, setPrayerSubmitted] = useState(false);
   const [savedKeys, setSavedKeys] = useState([]);
   const [now, setNow] = useState(new Date());
+  const navScrollRef = useRef(null);
+  const [showNavHint, setShowNavHint] = useState(true);
+  const [navScrollState, setNavScrollState] = useState({
+    left: false,
+    right: true,
+  });
+
+  const updateNavScrollState = useCallback(() => {
+    const el = navScrollRef.current;
+    if (!el) return;
+
+    const maxScrollLeft = Math.max(0, el.scrollWidth - el.clientWidth);
+
+    setNavScrollState({
+      left: el.scrollLeft > 8,
+      right: el.scrollLeft < maxScrollLeft - 8,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (showOverlay) return;
+
+    setShowNavHint(true);
+
+    const timer = setTimeout(() => {
+      setShowNavHint(false);
+    }, 7000);
+
+    return () => clearTimeout(timer);
+  }, [showOverlay]);
+
+  useEffect(() => {
+    if (showOverlay) return;
+
+    const activeButton = navScrollRef.current?.querySelector(
+      `[data-nav-id="${activeTab}"]`
+    );
+
+    if (activeButton) {
+      activeButton.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest',
+      });
+
+      setTimeout(updateNavScrollState, 250);
+    }
+  }, [activeTab, showOverlay, updateNavScrollState]);
+
+  useEffect(() => {
+    if (showOverlay) return;
+
+    const el = navScrollRef.current;
+    if (!el) return;
+
+    const handleResize = () => updateNavScrollState();
+
+    const frame = requestAnimationFrame(updateNavScrollState);
+
+    window.addEventListener('resize', handleResize);
+    el.addEventListener('scroll', updateNavScrollState, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('resize', handleResize);
+      el.removeEventListener('scroll', updateNavScrollState);
+    };
+  }, [showOverlay, updateNavScrollState]);
+
+  const handleNavScroll = () => {
+    updateNavScrollState();
+    setShowNavHint(false);
+  };
 
   useEffect(() => {
     setIsLoaded(true);
-
     const stored = localStorage.getItem('conventionSavedEvents');
-
     if (stored) {
       try {
         setSavedKeys(JSON.parse(stored));
@@ -1132,7 +1226,6 @@ export default function App() {
     const timer = setInterval(() => {
       setNow(new Date());
     }, 60000);
-
     return () => clearInterval(timer);
   }, []);
 
@@ -1179,10 +1272,8 @@ export default function App() {
 
   const handleTabSelect = (tab) => {
     if (tab === activeTab && !showOverlay) return;
-
     setActiveTab(tab);
     setShowOverlay(false);
-
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 10);
@@ -1701,8 +1792,9 @@ export default function App() {
         `,
       }}
     >
+      {/* Home Overlay View */}
       <div
-        className={`fixed inset-0 z-[60] overflow-y-auto transition-all duration-700 transform ${
+        className={`fixed inset-0 z-[60] overflow-y-auto styled-scrollbar transition-all duration-700 transform ${
           showOverlay
             ? 'opacity-100 translate-y-0'
             : 'opacity-0 pointer-events-none -translate-y-10'
@@ -1716,7 +1808,7 @@ export default function App() {
           <div className="absolute -top-32 -right-32 w-80 h-80 rounded-full bg-[#cb9d44]/20 blur-3xl"></div>
           <div className="absolute -bottom-28 -left-32 w-96 h-96 rounded-full bg-white/10 blur-3xl"></div>
 
-          <div className="max-w-md w-full text-white space-y-8 animate-fade-in-up py-8 relative z-10">
+          <div className="max-w-md w-full text-white space-y-8 animate-fade-in-up py-10 relative z-10 pb-20">
             <div className="mb-2">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 mb-5">
                 <Sparkles size={14} className="text-[#cb9d44]" />
@@ -1735,7 +1827,7 @@ export default function App() {
 
               <div className="flex items-center justify-center gap-2 text-white/60 text-sm mt-3">
                 <MapPin size={15} />
-                <span>Church of God Sabbath-Keeping Ministries</span>
+                <span>Church of God Sabbath-Keeping Ministries • Toronto</span>
               </div>
             </div>
 
@@ -1788,7 +1880,6 @@ export default function App() {
                     </p>
                   </div>
                 </div>
-
                 <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x" />
               </button>
 
@@ -1810,13 +1901,11 @@ export default function App() {
                     >
                       <span className="font-bold">{index + 1}</span>
                     </div>
-
                     <div className="text-left">
                       <h3 className="font-bold text-lg">{dayDisplay[day]}</h3>
                       <p className="text-xs text-white/60">{daySubtitles[day]}</p>
                     </div>
                   </div>
-
                   <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x" />
                 </button>
               ))}
@@ -1829,7 +1918,6 @@ export default function App() {
                   <div className="w-11 h-11 rounded-full bg-[#cb9d44] flex items-center justify-center text-[#111b2e]">
                     <Bookmark size={20} />
                   </div>
-
                   <div className="text-left">
                     <h3 className="font-bold text-lg">My Saved Events</h3>
                     <p className="text-xs text-white/70">
@@ -1837,7 +1925,6 @@ export default function App() {
                     </p>
                   </div>
                 </div>
-
                 <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x" />
               </button>
 
@@ -1850,17 +1937,15 @@ export default function App() {
                     className="w-11 h-11 rounded-full flex items-center justify-center border border-[#cb9d44]/30 bg-cover bg-center shadow-inner"
                     style={{ backgroundImage: `url("${asset(developerData.image)}")` }}
                   ></div>
-
                   <div className="text-left">
                     <h3 className="font-bold text-lg text-[#cb9d44]">
-                      App Developer
+                      {developerData.title}
                     </h3>
                     <p className="text-xs text-white/80 font-medium tracking-wide">
-                      Bro. Matt Robinson
+                      {developerData.speaker}
                     </p>
                   </div>
                 </div>
-
                 <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x" />
               </button>
             </div>
@@ -1868,11 +1953,23 @@ export default function App() {
         </div>
       </div>
 
+      {/* Main App Container */}
       <div
         className={`transition-opacity duration-700 delay-300 ${
           showOverlay ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100 min-h-screen relative'
         }`}
       >
+        {/* Floating Home Button */}
+        {!showOverlay && (
+          <button
+            onClick={() => setShowOverlay(true)}
+            className="fixed top-4 right-4 z-50 w-12 h-12 rounded-full bg-white/95 backdrop-blur-md shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-gray-100 flex items-center justify-center text-[#111b2e] hover:bg-white hover:text-[#0f1a82] hover:scale-105 active:scale-95 transition-all"
+            aria-label="Back to Home"
+          >
+            <Home size={22} />
+          </button>
+        )}
+
         <header
           className="pt-14 pb-9 px-6 text-center text-white shadow-lg relative rounded-b-[2.5rem] overflow-hidden"
           style={{
@@ -1882,7 +1979,7 @@ export default function App() {
           <div className="absolute -right-20 -top-20 w-60 h-60 rounded-full bg-[#cb9d44]/20 blur-3xl"></div>
           <div className="absolute -left-24 bottom-0 w-72 h-72 rounded-full bg-white/10 blur-3xl"></div>
 
-          <div className="relative z-10">
+          <div className="relative z-10 pr-12"> {/* Padding to prevent text overlap with home button */}
             <p className="uppercase tracking-[0.3em] text-[10px] mb-2 font-bold text-[#cb9d44]">
               Convention 2026
             </p>
@@ -1896,7 +1993,7 @@ export default function App() {
                 <Calendar size={14} /> July 3 - 5, 2026
               </span>
               <span className="inline-flex items-center gap-2">
-                <MapPin size={14} /> Brampton
+                <MapPin size={14} /> Toronto
               </span>
             </div>
           </div>
@@ -2138,8 +2235,8 @@ export default function App() {
               </div>
 
               <div className="rounded-2xl bg-[#cb9d44]/10 border border-[#cb9d44]/20 p-5 text-center">
-                <p className="text-sm text-[#7d5432] font-medium leading-relaxed">
-                  Menu selections can change at the discretion of Church of God Sabbath-Keeping Inc.
+                <p className="text-sm text-[#7d5432] font-bold leading-relaxed">
+                  Menu selections are subject to change at the discretion of The Church of God Sabbath-Keeping Inc.
                 </p>
               </div>
 
@@ -2395,46 +2492,62 @@ export default function App() {
         </main>
       </div>
 
+      {/* Navigation Footer */}
       {!showOverlay && (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl shadow-[0_-10px_30px_rgba(0,0,0,0.08)] border-t border-gray-100 md:sticky md:top-0 md:shadow-sm overflow-x-auto no-scrollbar md:pb-0 pb-safe">
-          <div className="max-w-2xl mx-auto flex items-center justify-between min-w-max px-2 md:px-0">
-            {navItems.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => handleTabSelect(tab.id)}
-                className={`flex flex-col items-center justify-center w-[4rem] sm:w-[4.5rem] py-3 md:py-4 gap-1 md:flex-row md:w-auto md:px-6 transition-all relative ${
-                  activeTab === tab.id
-                    ? 'text-[#0f1a82]'
-                    : 'text-gray-400 hover:text-gray-600'
-                }`}
-              >
-                <div
-                  className={`transition-transform duration-300 ${
-                    activeTab === tab.id ? 'scale-110 md:scale-100' : 'scale-100'
-                  }`}
-                >
-                  {tab.icon}
-                </div>
+        <nav className="fixed bottom-0 left-0 right-0 z-50 md:sticky md:top-0 md:bottom-auto">
+          <div className="relative max-w-2xl mx-auto md:max-w-full">
+            {/* Soft overlap shadow so users know the footer is layered over the content */}
+            <div className="pointer-events-none absolute -top-14 left-0 right-0 h-16 bg-gradient-to-t from-[#111b2e]/10 to-transparent md:hidden"></div>
 
-                <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-wide md:tracking-widest font-bold whitespace-nowrap">
-                  {tab.label}
-                </span>
+            <div
+              ref={navScrollRef}
+              onScroll={handleNavScroll}
+              className="footer-nav-scroll relative overflow-x-auto bg-[#111b2e]/95 text-white backdrop-blur-xl shadow-[0_-18px_45px_rgba(17,27,46,0.35)] border-t border-[#cb9d44]/35 rounded-t-[1.75rem] md:rounded-none md:bg-white/90 md:text-[#111b2e] md:shadow-sm md:border-gray-100"
+            >
+              <div className="max-w-2xl mx-auto flex items-center justify-start md:justify-between gap-1 sm:gap-2 px-5 md:px-0 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.65rem)] md:py-0 min-w-max">
+                {navItems.map((tab) => (
+                  <button
+                    key={tab.id}
+                    data-nav-id={tab.id}
+                    onClick={() => {
+                      handleTabSelect(tab.id);
+                    }}
+                    className={`flex flex-col items-center justify-center w-[4.4rem] sm:w-[4.8rem] py-3 md:py-4 gap-1 md:flex-row md:w-auto md:px-6 transition-all relative shrink-0 rounded-2xl md:rounded-none ${
+                      activeTab === tab.id
+                        ? 'text-[#cb9d44] bg-white/10 md:bg-transparent md:text-[#0f1a82]'
+                        : 'text-white/55 hover:text-white md:text-gray-400 md:hover:text-gray-600'
+                    }`}
+                  >
+                    <div
+                      className={`transition-transform duration-300 ${
+                        activeTab === tab.id ? 'scale-110 md:scale-100' : 'scale-100'
+                      }`}
+                    >
+                      {tab.icon}
+                    </div>
 
-                {tab.id === 'saved' && savedKeys.length > 0 && (
-                  <span className="absolute top-2 right-3 md:right-2 w-5 h-5 rounded-full bg-[#c4442b] text-white text-[10px] font-extrabold flex items-center justify-center">
-                    {savedKeys.length}
-                  </span>
-                )}
+                    <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-wide md:tracking-widest font-bold whitespace-nowrap">
+                      {tab.label}
+                    </span>
 
-                {activeTab === tab.id && (
-                  <div className="absolute top-0 md:bottom-0 md:top-auto left-1/2 -translate-x-1/2 md:translate-x-0 md:left-0 md:right-0 w-8 md:w-full h-1 bg-[#cb9d44] rounded-b-full md:rounded-t-full md:rounded-b-none shadow-[0_2px_10px_rgba(203,157,68,0.5)] md:shadow-[0_-2px_10px_rgba(203,157,68,0.5)]"></div>
-                )}
-              </button>
-            ))}
+                    {tab.id === 'saved' && savedKeys.length > 0 && (
+                      <span className="absolute top-2 right-3 md:right-2 w-5 h-5 rounded-full bg-[#c4442b] text-white text-[10px] font-extrabold flex items-center justify-center">
+                        {savedKeys.length}
+                      </span>
+                    )}
+
+                    {activeTab === tab.id && (
+                      <div className="absolute top-0 md:bottom-0 md:top-auto left-1/2 -translate-x-1/2 md:translate-x-0 md:left-0 md:right-0 w-8 md:w-full h-1 bg-[#cb9d44] rounded-b-full md:rounded-t-full md:rounded-b-none shadow-[0_2px_10px_rgba(203,157,68,0.6)] md:shadow-[0_-2px_10px_rgba(203,157,68,0.5)]"></div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </nav>
       )}
 
+      {/* Modern Compact Modal Design */}
       {modalData && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div
@@ -2445,37 +2558,32 @@ export default function App() {
           <div className="bg-white rounded-[2rem] w-full max-w-md overflow-hidden relative shadow-2xl animate-scale-in flex flex-col max-h-[88vh]">
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors z-20"
+              className="absolute top-4 right-4 w-9 h-9 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors z-20 shadow-sm"
             >
-              <X size={16} className="text-[#111b2e]" />
+              <X size={17} className="text-[#111b2e]" />
             </button>
 
-            <div className="px-6 pt-7 pb-5 bg-white border-b border-gray-100 flex items-start gap-5 relative">
-              <div
-                className="w-24 h-24 rounded-2xl bg-cover bg-center shadow-sm flex-shrink-0 flex items-center justify-center border border-gray-100"
-                style={
-                  modalData.image
-                    ? {
-                        backgroundImage: `url("${asset(modalData.image)}")`,
-                      }
-                    : {
-                        background: `linear-gradient(135deg, ${colors.primaryBlue} 0%, ${colors.darkBlue} 100%)`,
-                      }
-                }
-              >
-                {!modalData.image && (
-                  <IconRenderer name={modalData.icon} color="#ffffff" size={32} />
-                )}
-              </div>
-
-              <div className="flex-1 min-w-0 pr-6 pt-1">
+            {/* Compact Header Layout */}
+            <div className="px-6 pt-8 pb-5 bg-white border-b border-gray-100 flex items-start gap-5">
+              {modalData.image ? (
+                <div 
+                  className="w-20 h-20 rounded-2xl bg-cover bg-center shadow-sm flex-shrink-0 border border-gray-100 mt-1" 
+                  style={{backgroundImage: `url("${asset(modalData.image)}")`}}
+                />
+              ) : (
+                <div className="w-20 h-20 rounded-2xl flex items-center justify-center bg-[#cb9d44]/15 border border-[#cb9d44]/30 flex-shrink-0 mt-1">
+                  <IconRenderer name={modalData.icon} color={colors.gold} size={32} />
+                </div>
+              )}
+              
+              <div className="flex-1 min-w-0 pr-8">
                 {modalData.time && (
                   <p className="text-[10px] uppercase tracking-widest font-extrabold mb-1.5 text-[#cb9d44]">
                     {modalData.time}
                   </p>
                 )}
 
-                <h2 className="text-xl md:text-2xl font-extrabold text-[#111b2e] leading-tight">
+                <h2 className="text-xl md:text-2xl font-extrabold text-[#111b2e] leading-tight break-words">
                   {modalData.title}
                 </h2>
 
@@ -2486,16 +2594,16 @@ export default function App() {
                 )}
 
                 {modalDay && (
-                  <p className="text-[11px] text-gray-500 mt-1 font-medium">
+                  <p className="text-[10px] text-gray-500 mt-2 uppercase tracking-widest font-bold">
                     {dayDisplay[modalDay]} • {daySubtitles[modalDay]}
                   </p>
                 )}
               </div>
             </div>
 
-            <div className="p-7 overflow-y-auto">
+            <div className="p-6 md:p-7 overflow-y-auto bg-gray-50/50 flex-1">
               {modalData.role && (
-                <div className="mb-5 px-4 py-3 rounded-2xl bg-[#cb9d44]/10 border border-[#cb9d44]/20">
+                <div className="mb-5 px-5 py-4 rounded-2xl bg-white border border-[#cb9d44]/20 shadow-sm">
                   <p className="text-sm text-[#7d5432] italic leading-relaxed">
                     {modalData.role}
                   </p>
@@ -2507,7 +2615,7 @@ export default function App() {
                   {modalData.details}
                 </div>
               ) : (
-                <p className="text-gray-500 text-sm leading-relaxed">
+                <p className="text-gray-500 text-sm leading-relaxed mb-2">
                   More details may be shared during the service.
                 </p>
               )}
@@ -2516,12 +2624,16 @@ export default function App() {
                 {modalKey && (
                   <button
                     onClick={() => toggleSavedKey(modalKey)}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#111b2e] text-white font-bold py-3 rounded-xl shadow-md hover:bg-[#0f1a82] transition-colors"
+                    className={`w-full inline-flex items-center justify-center gap-2 font-bold py-3.5 rounded-xl shadow-md transition-colors ${
+                      savedKeys.includes(modalKey) 
+                        ? 'bg-[#f8fafc] text-[#111b2e] border border-gray-200 hover:bg-gray-100'
+                        : 'bg-[#111b2e] text-white hover:bg-[#0f1a82]'
+                    }`}
                   >
                     <Bookmark
-                      size={17}
+                      size={18}
                       fill={savedKeys.includes(modalKey) ? colors.gold : 'none'}
-                      className="text-[#cb9d44]"
+                      className={savedKeys.includes(modalKey) ? 'text-[#cb9d44]' : 'text-white'}
                     />
                     {savedKeys.includes(modalKey) ? 'Saved' : 'Save Event'}
                   </button>
@@ -2532,9 +2644,9 @@ export default function App() {
                     href={modalData.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#cb9d44] text-white font-bold py-3 rounded-xl shadow-md hover:bg-[#a3612b] transition-colors"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-[#cb9d44] text-white font-bold py-3.5 rounded-xl shadow-md hover:bg-[#a3612b] transition-colors"
                   >
-                    <ExternalLink size={17} />
+                    <ExternalLink size={18} />
                     {modalData.linkLabel || 'Open Link'}
                   </a>
                 )}
@@ -2585,6 +2697,61 @@ export default function App() {
 
             .animate-scale-in {
               animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+
+            /* Sleek, context-aware scrollbars for horizontal overflows */
+            .styled-scrollbar::-webkit-scrollbar {
+              height: 4px;
+              width: 4px;
+            }
+
+            .styled-scrollbar::-webkit-scrollbar-track {
+              background: transparent;
+            }
+
+            .styled-scrollbar::-webkit-scrollbar-thumb {
+              background-color: rgba(203, 157, 68, 0.35); /* Subtle Gold */
+              border-radius: 10px;
+            }
+
+            .styled-scrollbar::-webkit-scrollbar-thumb:hover {
+              background-color: rgba(203, 157, 68, 0.7);
+            }
+
+            /* Darker, more obvious footer nav scrollbar */
+            .footer-nav-scroll {
+              scrollbar-width: thin;
+              scrollbar-color: rgba(203, 157, 68, 0.95) rgba(17, 27, 46, 0.75);
+            }
+
+            .footer-nav-scroll::-webkit-scrollbar {
+              height: 7px;
+            }
+
+            .footer-nav-scroll::-webkit-scrollbar-track {
+              background: rgba(17, 27, 46, 0.75);
+              border-radius: 999px;
+              margin: 0 48px;
+            }
+
+            .footer-nav-scroll::-webkit-scrollbar-thumb {
+              background: rgba(203, 157, 68, 0.95);
+              border-radius: 999px;
+              border: 2px solid rgba(17, 27, 46, 0.85);
+            }
+
+            .footer-nav-scroll::-webkit-scrollbar-thumb:hover {
+              background: rgba(231, 180, 44, 1);
+            }
+
+            @media (min-width: 768px) {
+              .footer-nav-scroll {
+                scrollbar-width: none;
+              }
+
+              .footer-nav-scroll::-webkit-scrollbar {
+                display: none;
+              }
             }
 
             .no-scrollbar::-webkit-scrollbar {
