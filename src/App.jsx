@@ -99,6 +99,7 @@ const peopleImages = {
   mattTrillChambers: 'Matt-Trill Chambers.jpeg',
   mauriceBlagrove: 'Maurice Blagrove.jpeg',
   me: 'me.jpg',
+  melletaBrown: 'Meletta Brown.jpg',
   michaelHall: 'Michael Hall.jpeg',
   mrFranklinFala: 'Mr. Franklin Fala.jpeg',
   mrOmariRhoden: 'Mr. Omari Rhoden.jpeg',
@@ -413,6 +414,7 @@ const scheduleData = {
           speaker: 'Sis. Melleta Brown',
           role: 'Matt 9:35-10:1',
           icon: 'BookOpen',
+          image: peopleImages.melletaBrown,
           isInteractive: true,
         },
         {
