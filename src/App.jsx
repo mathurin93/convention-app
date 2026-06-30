@@ -81,6 +81,7 @@ const peopleImages = {
   christopherMcEwan: 'Christopher McEwan.jpeg',
   clarenceDuff: 'Clarence Duff.jpeg',
   davidSeverin: 'David Severin.jpeg',
+  davidSmith: 'David Smith.jpeg',
   deborahSargean: 'Deborah Sargean.jpeg',
   flyer: 'flyer.jpg',
   gervainEdwards: 'Gervain Edwards.jpeg',
@@ -312,6 +313,7 @@ const scheduleData = {
           speaker: 'Bro. David Smith',
           role: 'Morning Moderator. Dismiss children and youth to classes.',
           icon: 'Mic',
+          image: peopleImages.davidSmith,
           isInteractive: true,
         },
         {
@@ -358,6 +360,8 @@ const scheduleData = {
           speaker: 'Bro. David Smith',
           role: 'Children reunited with parents',
           icon: 'Info',
+          image: peopleImages.davidSmith,
+          isInteractive: true,
         },
       ],
     },
@@ -2441,54 +2445,52 @@ export default function App() {
           <div className="bg-white rounded-[2rem] w-full max-w-md overflow-hidden relative shadow-2xl animate-scale-in flex flex-col max-h-[88vh]">
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 w-9 h-9 bg-white/90 hover:bg-white rounded-full flex items-center justify-center transition-colors z-20 shadow-md"
+              className="absolute top-4 right-4 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors z-20"
             >
-              <X size={17} className="text-[#111b2e]" />
+              <X size={16} className="text-[#111b2e]" />
             </button>
 
-            <div
-              className="relative h-56 bg-cover bg-center flex items-center justify-center"
-              style={
-                modalData.image
-                  ? {
-                      backgroundImage: `linear-gradient(to bottom, rgba(17,27,46,0.05), rgba(17,27,46,0.25)), url("${asset(
-                        modalData.image
-                      )}")`,
-                    }
-                  : {
-                      background: `linear-gradient(135deg, ${colors.primaryBlue} 0%, ${colors.darkBlue} 100%)`,
-                    }
-              }
-            >
-              {!modalData.image && (
-                <div className="w-28 h-28 rounded-[2rem] flex items-center justify-center bg-[#cb9d44] shadow-xl border-4 border-white/20">
-                  <IconRenderer name={modalData.icon} color="#ffffff" size={42} />
-                </div>
-              )}
-            </div>
+            <div className="px-6 pt-7 pb-5 bg-white border-b border-gray-100 flex items-start gap-5 relative">
+              <div
+                className="w-24 h-24 rounded-2xl bg-cover bg-center shadow-sm flex-shrink-0 flex items-center justify-center border border-gray-100"
+                style={
+                  modalData.image
+                    ? {
+                        backgroundImage: `url("${asset(modalData.image)}")`,
+                      }
+                    : {
+                        background: `linear-gradient(135deg, ${colors.primaryBlue} 0%, ${colors.darkBlue} 100%)`,
+                      }
+                }
+              >
+                {!modalData.image && (
+                  <IconRenderer name={modalData.icon} color="#ffffff" size={32} />
+                )}
+              </div>
 
-            <div className="px-7 pt-6 pb-4 bg-white border-b border-gray-100">
-              {modalData.time && (
-                <p className="text-xs uppercase tracking-widest font-extrabold mb-2 text-[#cb9d44]">
-                  {modalData.time}
-                </p>
-              )}
+              <div className="flex-1 min-w-0 pr-6 pt-1">
+                {modalData.time && (
+                  <p className="text-[10px] uppercase tracking-widest font-extrabold mb-1.5 text-[#cb9d44]">
+                    {modalData.time}
+                  </p>
+                )}
 
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#111b2e] leading-tight">
-                {modalData.title}
-              </h2>
+                <h2 className="text-xl md:text-2xl font-extrabold text-[#111b2e] leading-tight">
+                  {modalData.title}
+                </h2>
 
-              {modalData.speaker && (
-                <p className="text-md font-bold mt-2 text-[#0f1a82]">
-                  {modalData.speaker}
-                </p>
-              )}
+                {modalData.speaker && (
+                  <p className="text-sm font-bold mt-1 text-[#0f1a82]">
+                    {modalData.speaker}
+                  </p>
+                )}
 
-              {modalDay && (
-                <p className="text-xs text-gray-500 mt-1 font-medium">
-                  {dayDisplay[modalDay]} • {daySubtitles[modalDay]}
-                </p>
-              )}
+                {modalDay && (
+                  <p className="text-[11px] text-gray-500 mt-1 font-medium">
+                    {dayDisplay[modalDay]} • {daySubtitles[modalDay]}
+                  </p>
+                )}
+              </div>
             </div>
 
             <div className="p-7 overflow-y-auto">
