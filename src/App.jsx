@@ -787,7 +787,7 @@ const scheduleData = {
         },
         {
           title: 'Vote of Thanks',
-          speaker: 'Pastor Green / Joanna Nichol / Pastor D Severin',
+          speaker: 'Pastor Green / Sis. Joanna Nichol / Pastor D Severin',
           icon: 'Users',
           image: peopleImages.joannaNichol,
           isInteractive: true,
