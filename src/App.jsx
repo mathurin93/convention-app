@@ -27,42 +27,6 @@ import {
   ExternalLink,
 } from 'lucide-react';
 
-type DayId = 'friday' | 'saturday' | 'sunday';
-type TabId = DayId | 'message' | 'saved' | 'menu' | 'feedback' | 'prayer';
-
-type EventItem = {
-  title: string;
-  time?: string;
-  speaker?: string;
-  role?: string;
-  icon?: string;
-  image?: string;
-  details?: string;
-  isInteractive?: boolean;
-  link?: string;
-  linkLabel?: string;
-};
-
-type SectionItem = {
-  type: 'section';
-  title: string;
-  time: string;
-  subtitle?: string;
-  speaker?: string;
-  role?: string;
-  icon?: string;
-  image?: string;
-  details?: string;
-  items: EventItem[];
-};
-
-type ProgramEntry = EventItem | SectionItem;
-
-type ModalItem = EventItem & {
-  link?: string;
-  linkLabel?: string;
-};
-
 const colors = {
   primaryBlue: '#0f1a82',
   darkBlue: '#111b2e',
@@ -78,7 +42,6 @@ const colors = {
 
 const conventionStartDate = new Date('2026-07-03T16:00:00');
 
-// Add your real Zoom link here when ready.
 const prayerZoomUrl = '';
 const prayerZoomLabel = 'Open Prayer Zoom Link';
 
@@ -88,25 +51,25 @@ const hostingDetails =
 const prayerDetails =
   'This prayer service will be live streamed separately from the main Zoom or YouTube service link.';
 
-const dayDates: Record<DayId, string> = {
+const dayDates = {
   friday: '2026-07-03',
   saturday: '2026-07-04',
   sunday: '2026-07-05',
 };
 
-const dayDisplay: Record<DayId, string> = {
+const dayDisplay = {
   friday: 'Friday',
   saturday: 'Saturday',
   sunday: 'Sunday',
 };
 
-const daySubtitles: Record<DayId, string> = {
+const daySubtitles = {
   friday: 'July 3 • Evening Service',
   saturday: 'July 4 • Full Day',
   sunday: 'July 5 • Final Day',
 };
 
-const asset = (file?: string) => {
+const asset = (file) => {
   if (!file) return '';
   if (file.startsWith('/')) return encodeURI(file);
   return encodeURI(`/${file}`);
@@ -135,12 +98,12 @@ const peopleImages = {
   mrOmariRhoden: 'Mr. Omari Rhoden.jpeg',
   nadiaLake: 'Nadia lake.jpeg',
   praiseAndWorshipTeam: 'Praise and worship team.jpeg',
-  prayerIcon: 'pray-1.png', // Left this in the object just in case, but no longer used for icons
+  prayerIcon: 'pray-1.png',
   rennaeByfield: 'Rennae Byfield.jpeg',
   shawnWallace: 'Shawn Wallace.jpeg',
 };
 
-const developerData: ModalItem = {
+const developerData = {
   title: 'App Developer',
   speaker: 'Bro. Matt Robinson',
   role: 'Servant of God',
@@ -153,7 +116,7 @@ const developerData: ModalItem = {
     'Matt Robinson is a child of God, a devoted husband, and a proud father of three beautiful girls and a God-sent son. His first ministry is his home, where he seeks to model the love, patience, and faithfulness of Christ.\n\nHe serves at the Church of God Sabbath-Keeping Ministries in Brampton as a teacher in the Christian Education Ministry and a youth leader in the Redeemed Youth Ministry. With a heart for discipleship, Matt is passionate about encouraging others, especially the next generation, to grow in faith and walk in their God-given purpose.',
 };
 
-const scheduleData: Record<DayId, ProgramEntry[]> = {
+const scheduleData = {
   friday: [
     {
       title: 'Prayer Service',
@@ -823,17 +786,11 @@ const scheduleData: Record<DayId, ProgramEntry[]> = {
   ],
 };
 
-function isSection(entry: ProgramEntry): entry is SectionItem {
-  return (entry as SectionItem).type === 'section';
+function isSection(entry) {
+  return entry && entry.type === 'section';
 }
 
-function PrayerIconBadge({
-  size = 22,
-  active = true,
-}: {
-  size?: number;
-  active?: boolean;
-}) {
+function PrayerIconBadge({ size = 22, active = true }) {
   return (
     <div
       style={{
@@ -878,16 +835,8 @@ function PrayerIconBadge({
   );
 }
 
-function IconRenderer({
-  name,
-  color = colors.primaryBlue,
-  size = 20,
-}: {
-  name?: string;
-  color?: string;
-  size?: number;
-}) {
-  const icons: Record<string, React.ReactNode> = {
+function IconRenderer({ name, color = colors.primaryBlue, size = 20 }) {
+  const icons = {
     Heart: <Heart color={color} size={size} />,
     PrayingHands: <PrayerIconBadge size={size} />,
     Coffee: <Coffee color={color} size={size} />,
@@ -908,22 +857,33 @@ function IconRenderer({
   return icons[name || 'Calendar'] || <Calendar color={color} size={size} />;
 }
 
-function getCategory(entry: ProgramEntry | EventItem) {
+function getCategory(entry) {
   const text = `${entry.title} ${entry.role || ''} ${entry.speaker || ''}`.toLowerCase();
 
   if (text.includes('gospel night') || text.includes('sermon')) return 'Sermon';
   if (text.includes('prayer') || text.includes('altar')) return 'Prayer';
+
   if (
     text.includes('breakfast') ||
     text.includes('lunch') ||
     text.includes('dinner') ||
     text.includes('feast')
-  )
+  ) {
     return 'Meal';
-  if (text.includes('worship') || text.includes('praise') || text.includes('hymn'))
+  }
+
+  if (text.includes('worship') || text.includes('praise') || text.includes('hymn')) {
     return 'Worship';
-  if (text.includes('workshop') || text.includes('presentation') || text.includes('sabbath school'))
+  }
+
+  if (
+    text.includes('workshop') ||
+    text.includes('presentation') ||
+    text.includes('sabbath school')
+  ) {
     return 'Teaching';
+  }
+
   if (text.includes('youth')) return 'Youth';
   if (text.includes('children')) return 'Children';
   if (text.includes('women')) return 'Women';
@@ -935,8 +895,8 @@ function getCategory(entry: ProgramEntry | EventItem) {
   return 'Program';
 }
 
-function getCategoryStyle(category: string) {
-  const styles: Record<string, { bg: string; text: string; border: string }> = {
+function getCategoryStyle(category) {
+  const styles = {
     Sermon: {
       bg: `${colors.rust}18`,
       text: colors.rust,
@@ -1007,7 +967,7 @@ function getCategoryStyle(category: string) {
   return styles[category] || styles.Program;
 }
 
-function parseClockTime(dateString: string, timeText?: string) {
+function parseClockTime(dateString, timeText) {
   if (!timeText) return null;
 
   const cleaned = timeText.trim();
@@ -1028,7 +988,7 @@ function parseClockTime(dateString: string, timeText?: string) {
   return date;
 }
 
-function getEventWindow(day: DayId, entry: ProgramEntry | EventItem) {
+function getEventWindow(day, entry) {
   const dateString = dayDates[day];
   if (!dateString || !entry.time) return null;
 
@@ -1037,7 +997,7 @@ function getEventWindow(day: DayId, entry: ProgramEntry | EventItem) {
 
   if (!start) return null;
 
-  let end: Date | null = null;
+  let end = null;
 
   if (timeParts[1]) {
     end = parseClockTime(dateString, timeParts[1]);
@@ -1054,15 +1014,15 @@ function getEventWindow(day: DayId, entry: ProgramEntry | EventItem) {
   return { start, end };
 }
 
-function topKey(day: DayId, index: number, entry: ProgramEntry) {
+function topKey(day, index, entry) {
   return `${day}-${index}-${entry.title}-${entry.time || ''}`;
 }
 
-function childKey(day: DayId, sectionIndex: number, section: SectionItem, childIndex: number, child: EventItem) {
+function childKey(day, sectionIndex, section, childIndex, child) {
   return `${day}-${sectionIndex}-${section.title}-${childIndex}-${child.title}-${child.speaker || ''}`;
 }
 
-function formatCountdown(now: Date) {
+function formatCountdown(now) {
   const diff = conventionStartDate.getTime() - now.getTime();
 
   if (diff <= 0) {
@@ -1086,7 +1046,7 @@ function formatCountdown(now: Date) {
   };
 }
 
-function getNowNextForDay(day: DayId, now: Date) {
+function getNowNextForDay(day, now) {
   const entries = scheduleData[day] || [];
 
   const timedEntries = entries
@@ -1136,14 +1096,14 @@ function getNowNextForDay(day: DayId, now: Date) {
 
 export default function App() {
   const [showOverlay, setShowOverlay] = useState(true);
-  const [activeTab, setActiveTab] = useState<TabId>('message');
-  const [modalData, setModalData] = useState<ModalItem | null>(null);
-  const [modalDay, setModalDay] = useState<DayId | null>(null);
-  const [modalKey, setModalKey] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState('message');
+  const [modalData, setModalData] = useState(null);
+  const [modalDay, setModalDay] = useState(null);
+  const [modalKey, setModalKey] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   const [prayerSubmitted, setPrayerSubmitted] = useState(false);
-  const [savedKeys, setSavedKeys] = useState<string[]>([]);
+  const [savedKeys, setSavedKeys] = useState([]);
   const [now, setNow] = useState(new Date());
 
   useEffect(() => {
@@ -1175,9 +1135,7 @@ export default function App() {
   const countdown = useMemo(() => formatCountdown(now), [now]);
 
   const allSavedEntries = useMemo(() => {
-    return Object.entries(scheduleData).flatMap(([dayValue, entries]) => {
-      const day = dayValue as DayId;
-
+    return Object.entries(scheduleData).flatMap(([day, entries]) => {
       return entries.flatMap((entry, entryIndex) => {
         const mainKey = topKey(day, entryIndex, entry);
 
@@ -1187,12 +1145,12 @@ export default function App() {
               day,
               key: mainKey,
               entry,
-              parentTitle: null as string | null,
+              parentTitle: null,
             },
             ...entry.items.map((child, childIndex) => ({
               day,
               key: childKey(day, entryIndex, entry, childIndex, child),
-              entry: child as ProgramEntry,
+              entry: child,
               parentTitle: entry.title,
             })),
           ];
@@ -1203,7 +1161,7 @@ export default function App() {
             day,
             key: mainKey,
             entry,
-            parentTitle: null as string | null,
+            parentTitle: null,
           },
         ];
       });
@@ -1215,7 +1173,7 @@ export default function App() {
     [allSavedEntries, savedKeys]
   );
 
-  const handleTabSelect = (tab: TabId) => {
+  const handleTabSelect = (tab) => {
     if (tab === activeTab && !showOverlay) return;
 
     setActiveTab(tab);
@@ -1226,13 +1184,13 @@ export default function App() {
     }, 10);
   };
 
-  const toggleSavedKey = (key: string) => {
+  const toggleSavedKey = (key) => {
     setSavedKeys((prev) =>
       prev.includes(key) ? prev.filter((item) => item !== key) : [...prev, key]
     );
   };
 
-  const openModal = (entry: ModalItem, day: DayId | null = null, key: string | null = null) => {
+  const openModal = (entry, day = null, key = null) => {
     setModalData(entry);
     setModalDay(day);
     setModalKey(key);
@@ -1244,19 +1202,19 @@ export default function App() {
     setModalKey(null);
   };
 
-  const handleFeedbackSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFeedbackSubmit = (e) => {
     e.preventDefault();
     setFeedbackSubmitted(true);
     setTimeout(() => setFeedbackSubmitted(false), 4000);
   };
 
-  const handlePrayerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handlePrayerSubmit = (e) => {
     e.preventDefault();
     setPrayerSubmitted(true);
     setTimeout(() => setPrayerSubmitted(false), 4000);
   };
 
-  const navItems: { id: TabId; label: string; icon: React.ReactNode }[] = [
+  const navItems = [
     { id: 'message', label: 'Message', icon: <ScrollText size={22} /> },
     { id: 'friday', label: 'Friday', icon: <Calendar size={22} /> },
     { id: 'saturday', label: 'Saturday', icon: <Calendar size={22} /> },
@@ -1271,7 +1229,7 @@ export default function App() {
     },
   ];
 
-  const renderCategoryPill = (entry: ProgramEntry | EventItem, featured = false) => {
+  const renderCategoryPill = (entry, featured = false) => {
     const category = getCategory(entry);
     const categoryStyle = getCategoryStyle(category);
 
@@ -1289,7 +1247,7 @@ export default function App() {
     );
   };
 
-  const renderNowNext = (day: DayId) => {
+  const renderNowNext = (day) => {
     const nowNext = getNowNextForDay(day, now);
     const item = nowNext.current || nowNext.next;
 
@@ -1418,12 +1376,12 @@ export default function App() {
   };
 
   const renderEventCard = (
-    event: EventItem,
-    day: DayId,
-    index: number,
-    keyValue: string,
+    event,
+    day,
+    index,
+    keyValue,
     compact = false,
-    parentTitle?: string | null
+    parentTitle = null
   ) => {
     const isSaved = savedKeys.includes(keyValue);
     const clickable = Boolean(event.isInteractive || event.details || event.link);
@@ -1517,12 +1475,7 @@ export default function App() {
     );
   };
 
-  const renderSectionCard = (
-    section: SectionItem,
-    day: DayId,
-    index: number,
-    keyValue: string
-  ) => {
+  const renderSectionCard = (section, day, index, keyValue) => {
     const isSaved = savedKeys.includes(keyValue);
 
     return (
@@ -1631,12 +1584,7 @@ export default function App() {
     );
   };
 
-  const renderTopLevelEvent = (
-    event: EventItem,
-    day: DayId,
-    index: number,
-    keyValue: string
-  ) => {
+  const renderTopLevelEvent = (event, day, index, keyValue) => {
     const isSaved = savedKeys.includes(keyValue);
     const category = getCategory(event);
     const categoryStyle = getCategoryStyle(category);
@@ -1749,7 +1697,6 @@ export default function App() {
         `,
       }}
     >
-      {/* --- OVERLAY SCREEN --- */}
       <div
         className={`fixed inset-0 z-[60] overflow-y-auto transition-all duration-700 transform ${
           showOverlay
@@ -1841,7 +1788,7 @@ export default function App() {
                 <ChevronRight size={20} className="text-[#cb9d44] animate-bounce-x" />
               </button>
 
-              {(['friday', 'saturday', 'sunday'] as DayId[]).map((day, index) => (
+              {['friday', 'saturday', 'sunday'].map((day, index) => (
                 <button
                   key={day}
                   onClick={() => handleTabSelect(day)}
@@ -1917,7 +1864,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* --- MAIN CONTENT --- */}
       <div
         className={`transition-opacity duration-700 delay-300 ${
           showOverlay ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100 min-h-screen relative'
@@ -2082,16 +2028,16 @@ export default function App() {
             </div>
           )}
 
-          {(['friday', 'saturday', 'sunday'] as DayId[]).includes(activeTab as DayId) && (
+          {['friday', 'saturday', 'sunday'].includes(activeTab) && (
             <div className="space-y-5">
               <div className="text-center mb-6">
                 <p className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#cb9d44]/15 text-[#a3612b] text-[10px] font-extrabold uppercase tracking-[0.25em] mb-4">
                   <Calendar size={14} />
-                  {daySubtitles[activeTab as DayId]}
+                  {daySubtitles[activeTab]}
                 </p>
 
                 <h2 className="text-3xl font-extrabold text-[#0f1a82]">
-                  {dayDisplay[activeTab as DayId]} Schedule
+                  {dayDisplay[activeTab]} Schedule
                 </h2>
 
                 <p className="text-gray-500 text-sm mt-2">
@@ -2099,17 +2045,17 @@ export default function App() {
                 </p>
               </div>
 
-              {renderNowNext(activeTab as DayId)}
+              {renderNowNext(activeTab)}
 
               <div className="space-y-6">
-                {scheduleData[activeTab as DayId].map((entry, index) => {
-                  const keyValue = topKey(activeTab as DayId, index, entry);
+                {scheduleData[activeTab].map((entry, index) => {
+                  const keyValue = topKey(activeTab, index, entry);
 
                   if (isSection(entry)) {
-                    return renderSectionCard(entry, activeTab as DayId, index, keyValue);
+                    return renderSectionCard(entry, activeTab, index, keyValue);
                   }
 
-                  return renderTopLevelEvent(entry, activeTab as DayId, index, keyValue);
+                  return renderTopLevelEvent(entry, activeTab, index, keyValue);
                 })}
               </div>
             </div>
