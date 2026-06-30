@@ -79,8 +79,10 @@ const asset = (file) => {
 };
 
 const peopleImages = {
+  andrewRose: 'Andrew Rose.jpg',
   antonetteWhitley: 'Antonette Whitley.jpeg',
   carolBlagrove: 'Carol Blagrove.jpeg',
+  christineCousins: 'Christine Cousins.jpg',
   christopherMcEwan: 'Christopher McEwan.jpeg',
   clarenceDuff: 'Clarence Duff.jpeg',
   davidSeverin: 'David Severin.jpeg',
@@ -91,6 +93,7 @@ const peopleImages = {
   hibbertHamilton: 'Hibbert Hamilton.jpeg',
   howardGreen: 'Howard Green.jpeg',
   joannaNichol: 'Joanna Nichol.jpeg',
+  kendellHarrison: 'Kendell Harrison.jpg',
   latoyaGraham: 'Latoya Graham.jpeg',
   louisGeorge: 'Louis George.jpg',
   lydeaCousins: 'Lydea Cousins.jpeg',
@@ -111,6 +114,7 @@ const peopleImages = {
   ricardoSeverin: 'Ricardo Severin.jpg',
   shawnWallace: 'Shawn Wallace.jpeg',
   skyJewels: 'Sky Jewels United Choir.jpg',
+  vanessaWhite: 'Vanessa White.jpg',
 };
 
 const developerData = {
@@ -178,11 +182,11 @@ const scheduleData = {
           title: 'Opening Prayer',
           speaker: 'Minister Andrew Rose',
           icon: 'PrayingHands',
+          image: peopleImages.andrewRose,
           isInteractive: true,
         },
         {
           title: 'Scripture Reading',
-          speaker: 'Bro. Keaton Cole',
           role: 'Matthew 10:1-20',
           icon: 'BookOpen',
           isInteractive: true,
@@ -526,6 +530,7 @@ const scheduleData = {
           title: 'Selection, Worship & Sermon',
           speaker: 'Brampton Dancers & Kendell Harrison',
           icon: 'Mic',
+          image: peopleImages.kendellHarrison,
           isInteractive: true,
         },
         {
@@ -543,6 +548,7 @@ const scheduleData = {
       speaker: 'Venessa White & Kedeisha Mitchell',
       role: 'Informal service of song and worship',
       icon: 'Music',
+      image: peopleImages.vanessaWhite,
     },
   ],
 
@@ -622,13 +628,13 @@ const scheduleData = {
           speaker: 'Sis C. Cousins, Sis M. Gooden, Sis S. Kerr, Sis M. Ricketts',
           role: 'Scripture: John 9:4-5 | Hymn #231',
           icon: 'BookOpen',
+          image: peopleImages.christineCousins,
           isInteractive: true,
         },
         {
           title: 'Praise & Worship',
           speaker: 'Worship Team',
           icon: 'Music',
-          image: peopleImages.praiseAndWorshipTeam,
         },
         {
           title: 'Discussion & Wrap-up',
@@ -638,7 +644,7 @@ const scheduleData = {
         },
         {
           title: 'Altar Call, Vote of Thanks & Announcements',
-          speaker: 'Sis L. Quarrie, Sis M. Brown, Sis Joanna Nichol',
+          speaker: 'Sis. L. Quarrie, Sis. M. Brown, Sis. Joanna Nichol',
           icon: 'PrayingHands',
           image: peopleImages.joannaNichol,
           isInteractive: true,
@@ -746,7 +752,7 @@ const scheduleData = {
           speaker: 'Pastor Louis George & Sis. Marcia Gooden',
           role: 'Hymn #226 "Send the Light" | Matt 20:1-13',
           icon: 'BookOpen',
-          image: peopleImages.louisGeorge,
+          image: peopleImages.praiseAndWorshipTeam,
           isInteractive: true,
         },
         {
@@ -768,6 +774,7 @@ const scheduleData = {
           title: 'Worship & Intro to Speaker',
           speaker: 'Sis. Michaela Simpson',
           icon: 'Mic',
+          image: peopleImages.praiseAndWorshipTeam,
           isInteractive: true,
         },
         {
@@ -915,8 +922,8 @@ function getCategory(entry) {
 
   if (text.includes('youth')) return 'Youth';
   if (text.includes('children')) return 'Children';
-  if (text.includes('women')) return 'Women';
-  if (text.includes('men')) return 'Men';
+  if (/\bwomen'?s?\b/.test(text)) return 'Women';
+  if (/\bmen'?s?\b/.test(text)) return 'Men';
   if (text.includes('offering')) return 'Offering';
   if (text.includes('video') || text.includes('hosting')) return 'Media';
   if (text.includes('vendor')) return 'Expo';
@@ -1060,18 +1067,21 @@ function formatCountdown(now) {
       days: 'Live',
       hours: '00',
       minutes: '00',
+      seconds: '00',
     };
   }
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
 
   return {
     started: false,
     days: String(days).padStart(2, '0'),
     hours: String(hours).padStart(2, '0'),
     minutes: String(minutes).padStart(2, '0'),
+    seconds: String(seconds).padStart(2, '0'),
   };
 }
 
@@ -1227,7 +1237,7 @@ export default function App() {
   useEffect(() => {
     const timer = setInterval(() => {
       setNow(new Date());
-    }, 60000);
+    }, 1000);
     return () => clearInterval(timer);
   }, []);
 
@@ -1273,6 +1283,14 @@ export default function App() {
   );
 
   const handleTabSelect = (tab) => {
+    if (tab === 'home') {
+      setShowOverlay(true);
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 10);
+      return;
+    }
+
     if (tab === activeTab && !showOverlay) return;
     setActiveTab(tab);
     setShowOverlay(false);
@@ -1312,6 +1330,7 @@ export default function App() {
   };
 
   const navItems = [
+    { id: 'home', label: 'Home', icon: <Home size={22} /> },
     { id: 'message', label: 'Message', icon: <ScrollText size={22} /> },
     { id: 'friday', label: 'Friday', icon: <Calendar size={22} /> },
     { id: 'saturday', label: 'Saturday', icon: <Calendar size={22} /> },
@@ -1833,32 +1852,46 @@ export default function App() {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-3">
-              <div className="rounded-2xl bg-white/10 border border-white/10 p-4">
-                <p className="text-3xl font-extrabold text-[#cb9d44]">
-                  {countdown.days}
-                </p>
-                <p className="text-[10px] uppercase tracking-widest text-white/60">
-                  {countdown.started ? 'Now' : 'Days'}
-                </p>
-              </div>
+            <div className="w-full mt-4 mb-2">
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#cb9d44] mb-3">
+                Countdown
+              </p>
+              <div className="grid grid-cols-4 gap-2 sm:gap-3">
+                <div className="rounded-2xl bg-white/10 border border-white/10 p-3">
+                  <p className="text-2xl sm:text-3xl font-extrabold text-[#cb9d44]">
+                    {countdown.days}
+                  </p>
+                  <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/60 mt-0.5">
+                    {countdown.started ? 'Now' : 'Days'}
+                  </p>
+                </div>
 
-              <div className="rounded-2xl bg-white/10 border border-white/10 p-4">
-                <p className="text-3xl font-extrabold text-[#cb9d44]">
-                  {countdown.hours}
-                </p>
-                <p className="text-[10px] uppercase tracking-widest text-white/60">
-                  Hours
-                </p>
-              </div>
+                <div className="rounded-2xl bg-white/10 border border-white/10 p-3">
+                  <p className="text-2xl sm:text-3xl font-extrabold text-[#cb9d44]">
+                    {countdown.hours}
+                  </p>
+                  <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/60 mt-0.5">
+                    Hours
+                  </p>
+                </div>
 
-              <div className="rounded-2xl bg-white/10 border border-white/10 p-4">
-                <p className="text-3xl font-extrabold text-[#cb9d44]">
-                  {countdown.minutes}
-                </p>
-                <p className="text-[10px] uppercase tracking-widest text-white/60">
-                  Minutes
-                </p>
+                <div className="rounded-2xl bg-white/10 border border-white/10 p-3">
+                  <p className="text-2xl sm:text-3xl font-extrabold text-[#cb9d44]">
+                    {countdown.minutes}
+                  </p>
+                  <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/60 mt-0.5">
+                    Mins
+                  </p>
+                </div>
+
+                <div className="rounded-2xl bg-white/10 border border-white/10 p-3">
+                  <p className="text-2xl sm:text-3xl font-extrabold text-[#cb9d44]">
+                    {countdown.seconds}
+                  </p>
+                  <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/60 mt-0.5">
+                    Secs
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -1961,17 +1994,6 @@ export default function App() {
           showOverlay ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100 min-h-screen relative'
         }`}
       >
-        {/* Floating Home Button */}
-        {!showOverlay && (
-          <button
-            onClick={() => setShowOverlay(true)}
-            className="fixed top-4 right-4 z-50 w-12 h-12 rounded-full bg-white/95 backdrop-blur-md shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-gray-100 flex items-center justify-center text-[#111b2e] hover:bg-white hover:text-[#0f1a82] hover:scale-105 active:scale-95 transition-all"
-            aria-label="Back to Home"
-          >
-            <Home size={22} />
-          </button>
-        )}
-
         <header
           className="pt-14 pb-9 px-6 text-center text-white shadow-lg relative rounded-b-[2.5rem] overflow-hidden"
           style={{
@@ -1981,7 +2003,7 @@ export default function App() {
           <div className="absolute -right-20 -top-20 w-60 h-60 rounded-full bg-[#cb9d44]/20 blur-3xl"></div>
           <div className="absolute -left-24 bottom-0 w-72 h-72 rounded-full bg-white/10 blur-3xl"></div>
 
-          <div className="relative z-10 pr-12"> {/* Padding to prevent text overlap with home button */}
+          <div className="relative z-10">
             <p className="uppercase tracking-[0.3em] text-[10px] mb-2 font-bold text-[#cb9d44]">
               Convention 2026
             </p>
