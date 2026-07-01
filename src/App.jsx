@@ -640,9 +640,9 @@ const scheduleData = {
         },
         {
           title: 'Praise & Worship',
-          speaker: 'Sis. Alicia Rose',
+          speaker: 'Sis. Alicia Rose & Kedeisha',
           icon: 'Music',
-          image: peopleImages.aliciaRose,
+          images: [peopleImages.aliciaRose, peopleImages.kedeisha],
         },
         {
           title: 'Discussion & Wrap-up',
