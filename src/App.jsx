@@ -79,11 +79,16 @@ const asset = (file) => {
 };
 
 const peopleImages = {
+  aliciaRose: 'Alicia Rose.jpeg',
+  andrewRose: 'Andrew Rose.jpg',
   antonetteWhitley: 'Antonette Whitley.jpeg',
+  bishopTreleven: 'Bishop Treleven.jpeg',
   carolBlagrove: 'Carol Blagrove.jpeg',
   chrisDuff: 'Chris Duff.jpeg',
+  christineCousins: 'Christine Cousins.jpg',
   christopherMcEwan: 'Christopher McEwan.jpeg',
   clarenceDuff: 'Clarence Duff.jpeg',
+  crystalChambers: 'Crystal Chambers.jpeg',
   davidSeverin: 'David Severin.jpeg',
   davidSmith: 'David Smith.jpeg',
   deborahSargean: 'Deborah Sargean.jpeg',
@@ -92,24 +97,32 @@ const peopleImages = {
   gervainEdwards: 'Gervain Edwards.jpeg',
   hibbertHamilton: 'Hibbert Hamilton.jpeg',
   howardGreen: 'Howard Green.jpeg',
-  joannaNichol: 'JoannaNichol.jpeg',
+  joannaNichol: 'Joanna Nichol.jpeg',
   kandellHarrison: 'Kandell Harrison.jpg',
   kedeisha: 'Kedeisha Mitchell.jpeg',
+  kimberleyCameron: 'Kimberley Cameron.jpeg',
   latoyaGraham: 'Latoya Graham.jpeg',
+  louisGeorge: 'Louis George.jpg',
   lydeaCousins: 'Lydea Cousins.jpeg',
   markHibbert: 'Mark Hibbert.jpeg',
+  marlonPalmer: 'Marlon Palmer.jpg',
   mattTrillChambers: 'Matt-Trill Chambers.jpeg',
   mauriceBlagrove: 'Maurice Blagrove.jpeg',
   me: 'me.jpg',
+  melletaBrown: 'Meletta Brown.jpg',
   michaelHall: 'Michael Hall.jpeg',
   mrFranklinFala: 'Mr. Franklin Fala.jpeg',
   mrOmariRhoden: 'Mr. Omari Rhoden.jpeg',
   nadiaLake: 'Nadia lake.jpeg',
+  pastorHines: 'Pastor Hines.jpg',
   praiseAndWorshipTeam: 'Praise and worship team.jpeg',
   prayerIcon: 'pray-1.png',
   rennaeByfield: 'Rennae Byfield.jpeg',
+  rhodaLeone: 'Rhoda Leone.jpeg',
+  ricardoSeverin: 'Ricardo Severin.jpg',
   shawnWallace: 'Shawn Wallace.jpeg',
   skyJewels: 'Sky Jewels United Choir.jpg',
+  vanessaWhite: 'Vanessa White.jpg',
   vendor: 'Vendor.png',
 };
 
@@ -536,7 +549,7 @@ const scheduleData = {
         },
         {
           title: 'Selection, Worship & Sermon',
-          speaker: 'Brampton Dancers & Kandell Harrison',
+          speaker: 'Brampton Dancers & Kendall Harrison',
           icon: 'Mic',
           image: peopleImages.kandellHarrison,
           isInteractive: true,
@@ -1523,11 +1536,11 @@ export default function App() {
           <div className="relative z-10 flex items-start gap-4">
             
             {imagesList.length > 0 ? (
-              <div className={`flex ${imagesList.length > 1 ? '-space-x-4' : ''} flex-shrink-0`}>
+              <div className={`flex ${imagesList.length > 2 ? '-space-x-2' : imagesList.length > 1 ? '-space-x-4' : ''} flex-shrink-0`}>
                 {imagesList.slice(0, 3).map((img, i) => (
                   <div
                     key={i}
-                    className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 bg-cover bg-center shadow-sm relative ${imagesList.length > 1 ? 'border-2 border-white' : 'border border-gray-100'}`}
+                    className={`${imagesList.length > 2 ? 'w-11 h-11' : 'w-14 h-14'} rounded-2xl flex items-center justify-center flex-shrink-0 bg-cover bg-center shadow-sm relative ${imagesList.length > 1 ? 'border-2 border-white' : 'border border-gray-100'}`}
                     style={{ backgroundImage: `url("${asset(img)}")`, zIndex: 10 - i }}
                   />
                 ))}
@@ -1664,11 +1677,11 @@ export default function App() {
             <div className="mt-5 flex items-center gap-4">
               
               {imagesList.length > 0 ? (
-                <div className={`flex ${imagesList.length > 1 ? '-space-x-4' : ''} flex-shrink-0`}>
+                <div className={`flex ${imagesList.length > 2 ? '-space-x-2' : imagesList.length > 1 ? '-space-x-4' : ''} flex-shrink-0`}>
                   {imagesList.slice(0, 3).map((img, i) => (
                     <div
                       key={i}
-                      className="w-16 h-16 rounded-2xl bg-cover bg-center border-2 border-white/30 shadow-lg relative"
+                      className={`${imagesList.length > 2 ? 'w-12 h-12' : 'w-16 h-16'} rounded-2xl bg-cover bg-center border-2 border-white/30 shadow-lg relative`}
                       style={{ backgroundImage: `url("${asset(img)}")`, zIndex: 10 - i }}
                     />
                   ))}
@@ -1739,11 +1752,11 @@ export default function App() {
           <div className="relative z-10 flex items-start gap-4">
             
             {imagesList.length > 0 ? (
-              <div className={`flex ${imagesList.length > 1 ? '-space-x-4' : ''} flex-shrink-0`}>
+              <div className={`flex ${imagesList.length > 2 ? '-space-x-2' : imagesList.length > 1 ? '-space-x-4' : ''} flex-shrink-0`}>
                 {imagesList.slice(0, 3).map((img, i) => (
                   <div
                     key={i}
-                    className={`w-16 h-16 rounded-2xl bg-cover bg-center shadow-sm relative ${imagesList.length > 1 ? 'border-2 border-white' : 'border border-gray-100'}`}
+                    className={`${imagesList.length > 2 ? 'w-12 h-12' : 'w-16 h-16'} rounded-2xl bg-cover bg-center shadow-sm relative ${imagesList.length > 1 ? 'border-2 border-white' : 'border border-gray-100'}`}
                     style={{ backgroundImage: `url("${asset(img)}")`, zIndex: 10 - i }}
                   />
                 ))}
@@ -2649,11 +2662,11 @@ export default function App() {
                 
                 if (modalImagesList.length > 0) {
                   return (
-                    <div className={`flex ${modalImagesList.length > 1 ? '-space-x-3' : ''} flex-shrink-0 mt-1`}>
+                    <div className={`flex ${modalImagesList.length > 2 ? '-space-x-2' : modalImagesList.length > 1 ? '-space-x-3' : ''} flex-shrink-0 mt-1`}>
                       {modalImagesList.slice(0, 3).map((img, i) => (
                         <div 
                           key={i}
-                          className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-cover bg-center shadow-sm relative ${modalImagesList.length > 1 ? 'border-2 border-white' : 'border border-gray-100'}`} 
+                          className={`${modalImagesList.length > 2 ? 'w-11 h-11 sm:w-12 sm:h-12' : 'w-14 h-14 sm:w-16 sm:h-16'} rounded-2xl flex items-center justify-center flex-shrink-0 bg-cover bg-center shadow-sm relative ${modalImagesList.length > 1 ? 'border-2 border-white' : 'border border-gray-100'}`} 
                           style={{ backgroundImage: `url("${asset(img)}")`, zIndex: 10 - i }}
                         />
                       ))}
