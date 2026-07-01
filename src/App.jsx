@@ -186,6 +186,8 @@ const scheduleData = {
           speaker: "Men's Ministries",
           role: 'Hymnal #231 "To the Work"',
           icon: 'Music',
+          image: peopleImages.praiseAndWorshipTeam,
+          isInteractive: true,
         },
         {
           title: 'Opening Prayer',
@@ -244,6 +246,7 @@ const scheduleData = {
           speaker: 'Praise and Worship Team',
           icon: 'Music',
           image: peopleImages.praiseAndWorshipTeam,
+          isInteractive: true,
         },
         {
           title: 'Intro to Speaker',
@@ -345,6 +348,8 @@ const scheduleData = {
           speaker: 'Congregation',
           role: '#92 "Sound the Battle Cry"',
           icon: 'Music',
+          image: peopleImages.praiseAndWorshipTeam,
+          isInteractive: true,
         },
         {
           title: 'Opening Prayer',
@@ -364,13 +369,15 @@ const scheduleData = {
           speaker: 'Congregation',
           role: '#94 "Onward Christian Soldiers"',
           icon: 'Music',
+          image: peopleImages.praiseAndWorshipTeam,
+          isInteractive: true,
         },
         {
           title: 'Offering, Praise & Worship',
           speaker: 'Pastor Howard Green',
           role: 'President of the Church of God Sabbath-Keeping Inc.',
           icon: 'Heart',
-          image: peopleImages.howardGreen,
+          images: [peopleImages.howardGreen, peopleImages.praiseAndWorshipTeam],
           isInteractive: true,
         },
         {
@@ -415,6 +422,8 @@ const scheduleData = {
           speaker: 'Sabbath Main Service',
           role: 'Hymn: #256 "I Am Resolved" & Dancers',
           icon: 'Music',
+          image: peopleImages.praiseAndWorshipTeam,
+          isInteractive: true,
         },
         {
           title: 'Opening Prayer',
@@ -450,7 +459,7 @@ const scheduleData = {
           speaker: 'Pastor Howard Green',
           role: 'President of the Church of God Sabbath-Keeping Inc.',
           icon: 'Heart',
-          image: peopleImages.howardGreen,
+          images: [peopleImages.howardGreen, peopleImages.praiseAndWorshipTeam],
           isInteractive: true,
         },
         {
@@ -458,6 +467,7 @@ const scheduleData = {
           speaker: 'Worship Team',
           icon: 'Music',
           image: peopleImages.praiseAndWorshipTeam,
+          isInteractive: true,
         },
         {
           title: 'Intro of Speaker',
@@ -477,6 +487,8 @@ const scheduleData = {
           title: 'Closing Song',
           speaker: 'Praise and Worship',
           icon: 'Music',
+          image: peopleImages.praiseAndWorshipTeam,
+          isInteractive: true,
         },
         {
           title: 'Altar Call & Closing Prayer',
@@ -525,6 +537,8 @@ const scheduleData = {
           title: "Children's Praise & Worship",
           speaker: "Children's Ministry",
           icon: 'Music',
+          image: peopleImages.praiseAndWorshipTeam,
+          isInteractive: true,
         },
         {
           title: 'Welcome, Prayer & Scripture',
@@ -551,7 +565,7 @@ const scheduleData = {
           title: 'Selection, Worship & Sermon',
           speaker: 'Brampton Dancers & Kendall Harrison',
           icon: 'Mic',
-          image: peopleImages.kandellHarrison,
+          images: [peopleImages.praiseAndWorshipTeam, peopleImages.kandellHarrison],
           isInteractive: true,
         },
         {
@@ -643,20 +657,22 @@ const scheduleData = {
           title: "Women's Praise & Video Presentation",
           speaker: "Women's Ministry",
           icon: 'MonitorPlay',
+          image: peopleImages.praiseAndWorshipTeam,
+          isInteractive: true,
         },
         {
           title: 'Welcome, Hymn, Prayer & Scripture',
           speaker: 'Sis C. Cousins, Sis M. Gooden, Sis S. Kerr, Sis M. Ricketts',
           role: 'Scripture: John 9:4-5 | Hymn #231',
           icon: 'BookOpen',
-          image: peopleImages.christineCousins,
+          images: [peopleImages.christineCousins, peopleImages.praiseAndWorshipTeam],
           isInteractive: true,
         },
         {
           title: 'Praise & Worship',
-          speaker: 'Sis. Alicia Rose & Kedeisha Mitchell',
+          speaker: 'Sis. Alicia Rose & Sis. Kedeisha Mitchell',
           icon: 'Music',
-          images: [peopleImages.aliciaRose, peopleImages.kedeisha],
+          images: [peopleImages.praiseAndWorshipTeam, peopleImages.aliciaRose, peopleImages.kedeisha],
           isInteractive: true,
         },
         {
@@ -716,6 +732,8 @@ const scheduleData = {
           title: 'Youth P&W',
           speaker: 'Youth Ministry',
           icon: 'Music',
+          image: peopleImages.praiseAndWorshipTeam,
+          isInteractive: true,
         },
         {
           title: 'Prayer & Scripture',
@@ -776,8 +794,8 @@ const scheduleData = {
           title: 'Praise and Worship, Prayer & Scripture',
           speaker: 'Pastor Louis George & Sis. Marcia Gooden',
           role: 'Hymn #226 "Send the Light" | Matt 20:1-13',
-          icon: 'BookOpen',
-          images: [peopleImages.louisGeorge],
+          icon: 'Music',
+          images: [peopleImages.praiseAndWorshipTeam, peopleImages.louisGeorge],
           isInteractive: true,
         },
         {
@@ -1390,6 +1408,7 @@ export default function App() {
   };
 
   const navItems = [
+    { id: 'home', label: 'Home', icon: <Home size={22} /> },
     { id: 'message', label: 'Message', icon: <ScrollText size={22} /> },
     { id: 'friday', label: 'Friday', icon: <Calendar size={22} /> },
     { id: 'saturday', label: 'Saturday', icon: <Calendar size={22} /> },
@@ -2966,7 +2985,7 @@ export default function App() {
             @supports (padding-bottom: env(safe-area-inset-bottom)) {
               .pb-safe {
                 padding-bottom: env(safe-area-inset-bottom);
-              }F
+              }
             }
           `,
         }}
