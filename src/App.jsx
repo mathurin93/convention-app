@@ -1335,20 +1335,61 @@ export default function App() {
     setModalKey(null);
   };
 
-  const handleFeedbackSubmit = (e) => {
+  const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
+    const form = e.target;
+    
+    try {
+      await fetch('https://formsubmit.co/ajax/cogavproductions@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          _subject: 'Convention 2026 - Feedback Submission',
+          Name: form.elements[0].value || 'Anonymous',
+          Email: form.elements[1].value || 'No email provided',
+          Message: form.elements[2].value,
+        }),
+      });
+    } catch (error) {
+      console.error('Error sending feedback:', error);
+    }
+
     setFeedbackSubmitted(true);
     setTimeout(() => setFeedbackSubmitted(false), 4000);
+    form.reset();
   };
 
-  const handlePrayerSubmit = (e) => {
+  const handlePrayerSubmit = async (e) => {
     e.preventDefault();
+    const form = e.target;
+    
+    try {
+      await fetch('https://formsubmit.co/ajax/cogavproductions@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          _subject: 'Convention 2026 - Prayer Request',
+          Name: form.elements[0].value || 'Anonymous',
+          Email: form.elements[1].value || 'No email provided',
+          Request: form.elements[2].value,
+        }),
+      });
+    } catch (error) {
+      console.error('Error sending prayer request:', error);
+    }
+
     setPrayerSubmitted(true);
     setTimeout(() => setPrayerSubmitted(false), 4000);
+    form.reset();
   };
 
   const navItems = [
-    { id: 'home', label: 'Home', icon: <Home size={22} /> },
     { id: 'message', label: 'Message', icon: <ScrollText size={22} /> },
     { id: 'friday', label: 'Friday', icon: <Calendar size={22} /> },
     { id: 'saturday', label: 'Saturday', icon: <Calendar size={22} /> },
@@ -2638,50 +2679,73 @@ export default function App() {
         </nav>
       )}
 
-      {/* Modern Compact Modal Design */}
-      {modalData && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-[#111b2e]/70 backdrop-blur-sm animate-fade-in"
+      {/* Larger Image-Friendly Modal Design */}
+{modalData && (
+  <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5">
+    <div
+      className="absolute inset-0 bg-[#111b2e]/75 backdrop-blur-sm animate-fade-in"
+      onClick={closeModal}
+    ></div>
+
+    {(() => {
+      const modalImagesList = modalData.images || (modalData.image ? [modalData.image] : []);
+      const hasImages = modalImagesList.length > 0;
+
+      return (
+        <div
+          className={`bg-white rounded-[2rem] w-full overflow-hidden relative shadow-2xl animate-scale-in max-h-[92vh] ${
+            hasImages
+              ? 'max-w-5xl md:grid md:grid-cols-[1.15fr_0.85fr]'
+              : 'max-w-md flex flex-col'
+          }`}
+        >
+          <button
             onClick={closeModal}
-          ></div>
+            className="absolute top-4 right-4 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center transition-colors z-30 shadow-lg"
+          >
+            <X size={18} className="text-[#111b2e]" />
+          </button>
 
-          <div className="bg-white rounded-[2rem] w-full max-w-md overflow-hidden relative shadow-2xl animate-scale-in flex flex-col max-h-[88vh]">
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 w-9 h-9 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors z-20 shadow-sm"
-            >
-              <X size={17} className="text-[#111b2e]" />
-            </button>
+          {hasImages ? (
+            <div className="bg-[#111b2e] p-3 sm:p-4 overflow-y-auto max-h-[45vh] md:max-h-[92vh] styled-scrollbar">
+              <div
+                className={`grid gap-3 ${
+                  modalImagesList.length === 1
+                    ? 'grid-cols-1'
+                    : 'grid-cols-1'
+                }`}
+              >
+                {modalImagesList.slice(0, 3).map((img, i) => (
+                  <div
+                    key={i}
+                    className="relative overflow-hidden rounded-[1.5rem] bg-white/10 border border-white/10 shadow-xl"
+                  >
+                    <img
+                      src={asset(img)}
+                      alt={`${modalData.title} image ${i + 1}`}
+                      className={`w-full object-cover ${
+                        modalImagesList.length === 1
+                          ? 'h-[360px] sm:h-[460px] md:h-[calc(92vh-2rem)]'
+                          : 'h-[260px] sm:h-[330px] md:h-[280px]'
+                      }`}
+                    />
 
-            {/* Compact Header Layout */}
-            <div className="px-6 pt-8 pb-5 bg-white border-b border-gray-100 flex items-start gap-4 sm:gap-5">
-              
-              {(() => {
-                const modalImagesList = modalData.images || (modalData.image ? [modalData.image] : []);
-                
-                if (modalImagesList.length > 0) {
-                  return (
-                    <div className={`flex ${modalImagesList.length > 2 ? '-space-x-2' : modalImagesList.length > 1 ? '-space-x-3' : ''} flex-shrink-0 mt-1`}>
-                      {modalImagesList.slice(0, 3).map((img, i) => (
-                        <div 
-                          key={i}
-                          className={`${modalImagesList.length > 2 ? 'w-11 h-11 sm:w-12 sm:h-12' : 'w-14 h-14 sm:w-16 sm:h-16'} rounded-2xl flex items-center justify-center flex-shrink-0 bg-cover bg-center shadow-sm relative ${modalImagesList.length > 1 ? 'border-2 border-white' : 'border border-gray-100'}`} 
-                          style={{ backgroundImage: `url("${asset(img)}")`, zIndex: 10 - i }}
-                        />
-                      ))}
-                    </div>
-                  );
-                }
-                
-                return (
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center bg-[#cb9d44]/15 border border-[#cb9d44]/30 flex-shrink-0 mt-1">
-                    <IconRenderer name={modalData.icon} color={colors.gold} size={28} />
+                    {modalImagesList.length > 1 && (
+                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#111b2e]/75 text-white text-[10px] font-extrabold tracking-widest uppercase backdrop-blur-sm">
+                        Image {i + 1} of {modalImagesList.slice(0, 3).length}
+                      </div>
+                    )}
                   </div>
-                );
-              })()}
-              
-              <div className="flex-1 min-w-0 pr-2 sm:pr-8">
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="px-6 pt-8 pb-5 bg-white border-b border-gray-100 flex items-start gap-4 sm:gap-5">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-[#cb9d44]/15 border border-[#cb9d44]/30 flex-shrink-0 mt-1">
+                <IconRenderer name={modalData.icon} color={colors.gold} size={30} />
+              </div>
+
+              <div className="flex-1 min-w-0 pr-8">
                 {modalData.time && (
                   <p className="text-[10px] uppercase tracking-widest font-extrabold mb-1.5 text-[#cb9d44]">
                     {modalData.time}
@@ -2705,8 +2769,36 @@ export default function App() {
                 )}
               </div>
             </div>
+          )}
 
-            <div className="p-6 md:p-7 overflow-y-auto bg-gray-50/50 flex-1">
+          <div className="flex flex-col max-h-[92vh] overflow-y-auto bg-gray-50/50 styled-scrollbar">
+            {hasImages && (
+              <div className="px-6 sm:px-7 pt-8 pb-5 bg-white border-b border-gray-100">
+                {modalData.time && (
+                  <p className="text-[10px] uppercase tracking-widest font-extrabold mb-1.5 text-[#cb9d44]">
+                    {modalData.time}
+                  </p>
+                )}
+
+                <h2 className="text-2xl md:text-3xl font-extrabold text-[#111b2e] leading-tight break-words pr-10">
+                  {modalData.title}
+                </h2>
+
+                {modalData.speaker && (
+                  <p className="text-base font-bold mt-2 text-[#0f1a82]">
+                    {modalData.speaker}
+                  </p>
+                )}
+
+                {modalDay && (
+                  <p className="text-[10px] text-gray-500 mt-3 uppercase tracking-widest font-bold">
+                    {dayDisplay[modalDay]} • {daySubtitles[modalDay]}
+                  </p>
+                )}
+              </div>
+            )}
+
+            <div className="p-6 md:p-7 flex-1">
               {modalData.role && (
                 <div className="mb-5 px-5 py-4 rounded-2xl bg-white border border-[#cb9d44]/20 shadow-sm">
                   <p className="text-sm text-[#7d5432] italic leading-relaxed">
@@ -2730,7 +2822,7 @@ export default function App() {
                   <button
                     onClick={() => toggleSavedKey(modalKey)}
                     className={`w-full inline-flex items-center justify-center gap-2 font-bold py-3.5 rounded-xl shadow-md transition-colors ${
-                      savedKeys.includes(modalKey) 
+                      savedKeys.includes(modalKey)
                         ? 'bg-[#f8fafc] text-[#111b2e] border border-gray-200 hover:bg-gray-100'
                         : 'bg-[#111b2e] text-white hover:bg-[#0f1a82]'
                     }`}
@@ -2759,7 +2851,10 @@ export default function App() {
             </div>
           </div>
         </div>
-      )}
+      );
+    })()}
+  </div>
+)}
 
       <style
         dangerouslySetInnerHTML={{
@@ -2871,7 +2966,7 @@ export default function App() {
             @supports (padding-bottom: env(safe-area-inset-bottom)) {
               .pb-safe {
                 padding-bottom: env(safe-area-inset-bottom);
-              }
+              }F
             }
           `,
         }}
