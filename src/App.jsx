@@ -665,14 +665,14 @@ const scheduleData = {
           speaker: 'Sis C. Cousins, Sis M. Gooden, Sis S. Kerr, Sis M. Ricketts',
           role: 'Scripture: John 9:4-5 | Hymn #231',
           icon: 'BookOpen',
-          images: [peopleImages.christineCousins, peopleImages.praiseAndWorshipTeam],
+          image: peopleImages.christineCousins,
           isInteractive: true,
         },
         {
           title: 'Praise & Worship',
           speaker: 'Sis. Alicia Rose & Sis. Kedeisha Mitchell',
           icon: 'Music',
-          images: [peopleImages.praiseAndWorshipTeam, peopleImages.aliciaRose, peopleImages.kedeisha],
+          images: [peopleImages.aliciaRose, peopleImages.kedeisha],
           isInteractive: true,
         },
         {
@@ -732,7 +732,6 @@ const scheduleData = {
           title: 'Youth P&W',
           speaker: 'Youth Ministry',
           icon: 'Music',
-          image: peopleImages.praiseAndWorshipTeam,
           isInteractive: true,
         },
         {
@@ -795,7 +794,7 @@ const scheduleData = {
           speaker: 'Pastor Louis George & Sis. Marcia Gooden',
           role: 'Hymn #226 "Send the Light" | Matt 20:1-13',
           icon: 'Music',
-          images: [peopleImages.praiseAndWorshipTeam, peopleImages.louisGeorge],
+          image: peopleImages.louisGeorge,
           isInteractive: true,
         },
         {
