@@ -640,9 +640,9 @@ const scheduleData = {
         },
         {
           title: 'Praise & Worship',
-          speaker: 'Sis. Alicia Rose & Kedeisha',
+          speaker: 'Sis. Alicia Rose',
           icon: 'Music',
-          images: [peopleImages.aliciaRose, peopleImages.kedeisha],
+          image: peopleImages.aliciaRose,
         },
         {
           title: 'Discussion & Wrap-up',
@@ -1155,6 +1155,7 @@ export default function App() {
   const [savedKeys, setSavedKeys] = useState([]);
   const [now, setNow] = useState(new Date());
   const navScrollRef = useRef(null);
+  const [showNavHint, setShowNavHint] = useState(true);
   const [navScrollState, setNavScrollState] = useState({
     left: false,
     right: true,
@@ -1171,6 +1172,18 @@ export default function App() {
       right: el.scrollLeft < maxScrollLeft - 8,
     });
   }, []);
+
+  useEffect(() => {
+    if (showOverlay) return;
+
+    setShowNavHint(true);
+
+    const timer = setTimeout(() => {
+      setShowNavHint(false);
+    }, 7000);
+
+    return () => clearTimeout(timer);
+  }, [showOverlay]);
 
   useEffect(() => {
     if (showOverlay) return;
@@ -1212,6 +1225,7 @@ export default function App() {
 
   const handleNavScroll = () => {
     updateNavScrollState();
+    setShowNavHint(false);
   };
 
   useEffect(() => {
@@ -2520,55 +2534,97 @@ export default function App() {
 
       {/* Navigation Footer */}
       {!showOverlay && (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/85 backdrop-blur-xl shadow-[0_-10px_30px_rgba(0,0,0,0.08)] border-t border-white/50 md:sticky md:top-0 md:shadow-sm overflow-x-auto styled-scrollbar md:pb-0 pb-safe relative">
-          
-          <div className="max-w-2xl mx-auto flex items-center justify-start md:justify-between gap-1 sm:gap-2 px-3 md:px-0 relative z-0 pb-1.5 md:pb-0 min-w-max">
-            {navItems.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => handleTabSelect(tab.id)}
-                className={`flex flex-col items-center justify-center w-[4.5rem] sm:w-[5rem] py-3 md:py-4 gap-1 md:flex-row md:w-auto md:px-6 transition-all relative shrink-0 ${
-                  activeTab === tab.id
-                    ? 'text-[#0f1a82]'
-                    : 'text-gray-400 hover:text-gray-600'
-                }`}
-              >
-                <div
-                  className={`transition-transform duration-300 ${
-                    activeTab === tab.id ? 'scale-110 md:scale-100' : 'scale-100'
-                  }`}
-                >
-                  {tab.icon}
-                </div>
+        <nav className="fixed bottom-0 left-0 right-0 z-50 md:sticky md:top-0 md:bottom-auto">
+          <div className="relative max-w-2xl mx-auto md:max-w-full">
+            {/* Soft overlap shadow so users know the footer is layered over the content */}
+            <div className="pointer-events-none absolute -top-14 left-0 right-0 h-16 bg-gradient-to-t from-[#111b2e]/35 to-transparent md:hidden"></div>
 
-                <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-wide md:tracking-widest font-bold whitespace-nowrap">
-                  {tab.label}
-                </span>
-
-                {tab.id === 'saved' && savedKeys.length > 0 && (
-                  <span className="absolute top-2 right-3 md:right-2 w-5 h-5 rounded-full bg-[#c4442b] text-white text-[10px] font-extrabold flex items-center justify-center">
-                    {savedKeys.length}
+            {/* Small mobile hint that disappears after a few seconds or when the user scrolls */}
+            {showNavHint && navScrollState.right && (
+              <div className="absolute -top-11 right-4 z-30 md:hidden">
+                <div className="flex items-center gap-2 rounded-full bg-[#111b2e] text-white border border-[#cb9d44]/40 shadow-xl px-4 py-2">
+                  <ChevronsLeftRight size={14} className="text-[#cb9d44]" />
+                  <span className="text-[10px] font-extrabold uppercase tracking-[0.2em]">
+                    Swipe menu
                   </span>
-                )}
-
-                {activeTab === tab.id && (
-                  <div className="absolute top-0 md:bottom-0 md:top-auto left-1/2 -translate-x-1/2 md:translate-x-0 md:left-0 md:right-0 w-8 md:w-full h-1 bg-[#cb9d44] rounded-b-full md:rounded-t-full md:rounded-b-none shadow-[0_2px_10px_rgba(203,157,68,0.5)] md:shadow-[0_-2px_10px_rgba(203,157,68,0.5)]"></div>
-                )}
-              </button>
-            ))}
-            
-            {/* Adding Home Button directly into the navigation bar! */}
-            <button
-              onClick={() => setShowOverlay(true)}
-              className="flex flex-col items-center justify-center w-[4.5rem] sm:w-[5rem] py-3 md:py-4 gap-1 md:flex-row md:w-auto md:px-6 transition-all relative shrink-0 text-[#a3612b] hover:text-[#7d5432]"
-            >
-              <div className="transition-transform duration-300 scale-100">
-                <Home size={22} />
+                </div>
               </div>
-              <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-wide md:tracking-widest font-bold whitespace-nowrap">
-                Home
-              </span>
-            </button>
+            )}
+
+            {/* Left fade appears after scrolling to show there are items behind */}
+            {navScrollState.left && (
+              <div className="pointer-events-none absolute left-0 top-0 bottom-0 z-20 w-12 bg-gradient-to-r from-[#111b2e] via-[#111b2e]/90 to-transparent md:hidden"></div>
+            )}
+
+            {/* Right fade shows there are more footer items off-screen */}
+            {navScrollState.right && (
+              <div className="pointer-events-none absolute right-0 top-0 bottom-0 z-20 w-20 bg-gradient-to-l from-[#111b2e] via-[#111b2e]/95 to-transparent md:hidden">
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 text-[#cb9d44]">
+                  <span className="text-[9px] font-extrabold uppercase tracking-widest">
+                    More
+                  </span>
+                  <ChevronRight size={14} />
+                </div>
+              </div>
+            )}
+
+            <div
+              ref={navScrollRef}
+              onScroll={handleNavScroll}
+              className="footer-nav-scroll relative overflow-x-auto bg-[#111b2e]/95 text-white backdrop-blur-xl shadow-[0_-18px_45px_rgba(17,27,46,0.35)] border-t border-[#cb9d44]/35 rounded-t-[1.75rem] md:rounded-none md:bg-white/90 md:text-[#111b2e] md:shadow-sm md:border-gray-100"
+            >
+              <div className="max-w-2xl mx-auto flex items-center justify-start md:justify-between gap-1 sm:gap-2 px-5 md:px-0 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.65rem)] md:py-0 min-w-max">
+                {navItems.map((tab) => (
+                  <button
+                    key={tab.id}
+                    data-nav-id={tab.id}
+                    onClick={() => {
+                      setShowNavHint(false);
+                      handleTabSelect(tab.id);
+                    }}
+                    className={`flex flex-col items-center justify-center w-[4.6rem] sm:w-[5rem] py-3 md:py-4 gap-1 md:flex-row md:w-auto md:px-6 transition-all relative shrink-0 rounded-2xl md:rounded-none ${
+                      activeTab === tab.id
+                        ? 'text-[#cb9d44] bg-white/10 md:bg-transparent md:text-[#0f1a82]'
+                        : 'text-white/55 hover:text-white md:text-gray-400 md:hover:text-gray-600'
+                    }`}
+                  >
+                    <div
+                      className={`transition-transform duration-300 ${
+                        activeTab === tab.id ? 'scale-110 md:scale-100' : 'scale-100'
+                      }`}
+                    >
+                      {tab.icon}
+                    </div>
+
+                    <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-wide md:tracking-widest font-bold whitespace-nowrap">
+                      {tab.label}
+                    </span>
+
+                    {tab.id === 'saved' && savedKeys.length > 0 && (
+                      <span className="absolute top-2 right-3 md:right-2 w-5 h-5 rounded-full bg-[#c4442b] text-white text-[10px] font-extrabold flex items-center justify-center">
+                        {savedKeys.length}
+                      </span>
+                    )}
+
+                    {activeTab === tab.id && (
+                      <div className="absolute top-0 md:bottom-0 md:top-auto left-1/2 -translate-x-1/2 md:translate-x-0 md:left-0 md:right-0 w-8 md:w-full h-1 bg-[#cb9d44] rounded-b-full md:rounded-t-full md:rounded-b-none shadow-[0_2px_10px_rgba(203,157,68,0.6)] md:shadow-[0_-2px_10px_rgba(203,157,68,0.5)]"></div>
+                    )}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() => setShowOverlay(true)}
+                  className="flex flex-col items-center justify-center w-[4.6rem] sm:w-[5rem] py-3 md:py-4 gap-1 md:flex-row md:w-auto md:px-6 transition-all relative shrink-0 rounded-2xl md:rounded-none text-white/55 hover:text-white md:text-[#a3612b] md:hover:text-[#7d5432]"
+                >
+                  <div className="transition-transform duration-300 scale-100">
+                    <Home size={22} />
+                  </div>
+                  <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-wide md:tracking-widest font-bold whitespace-nowrap">
+                    Home
+                  </span>
+                </button>
+              </div>
+            </div>
           </div>
         </nav>
       )}
@@ -2741,8 +2797,8 @@ export default function App() {
 
             /* Sleek, context-aware scrollbars for horizontal overflows */
             .styled-scrollbar::-webkit-scrollbar {
-              height: 5px;
-              width: 5px;
+              height: 4px;
+              width: 4px;
             }
 
             .styled-scrollbar::-webkit-scrollbar-track {
@@ -2756,6 +2812,42 @@ export default function App() {
 
             .styled-scrollbar::-webkit-scrollbar-thumb:hover {
               background-color: rgba(203, 157, 68, 0.7);
+            }
+
+            /* Darker, more obvious footer nav scrollbar */
+            .footer-nav-scroll {
+              scrollbar-width: thin;
+              scrollbar-color: rgba(203, 157, 68, 0.95) rgba(17, 27, 46, 0.75);
+            }
+
+            .footer-nav-scroll::-webkit-scrollbar {
+              height: 7px;
+            }
+
+            .footer-nav-scroll::-webkit-scrollbar-track {
+              background: rgba(17, 27, 46, 0.75);
+              border-radius: 999px;
+              margin: 0 48px;
+            }
+
+            .footer-nav-scroll::-webkit-scrollbar-thumb {
+              background: rgba(203, 157, 68, 0.95);
+              border-radius: 999px;
+              border: 2px solid rgba(17, 27, 46, 0.85);
+            }
+
+            .footer-nav-scroll::-webkit-scrollbar-thumb:hover {
+              background: rgba(231, 180, 44, 1);
+            }
+
+            @media (min-width: 768px) {
+              .footer-nav-scroll {
+                scrollbar-width: none;
+              }
+
+              .footer-nav-scroll::-webkit-scrollbar {
+                display: none;
+              }
             }
 
             .no-scrollbar::-webkit-scrollbar {
