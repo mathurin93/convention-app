@@ -537,7 +537,6 @@ const scheduleData = {
           title: "Children's Praise & Worship",
           speaker: "Children's Ministry",
           icon: 'Music',
-          image: peopleImages.praiseAndWorshipTeam,
           isInteractive: true,
         },
         {
@@ -565,7 +564,7 @@ const scheduleData = {
           title: 'Selection, Worship & Sermon',
           speaker: 'Brampton Dancers & Kendall Harrison',
           icon: 'Mic',
-          images: [peopleImages.praiseAndWorshipTeam, peopleImages.kandellHarrison],
+          image: peopleImages.kandellHarrison,
           isInteractive: true,
         },
         {
@@ -657,7 +656,6 @@ const scheduleData = {
           title: "Women's Praise & Video Presentation",
           speaker: "Women's Ministry",
           icon: 'MonitorPlay',
-          image: peopleImages.praiseAndWorshipTeam,
           isInteractive: true,
         },
         {
