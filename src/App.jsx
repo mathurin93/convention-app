@@ -79,12 +79,15 @@ const asset = (file) => {
 };
 
 const peopleImages = {
+  aliciaRose: 'Alicia Rose.jpeg',
   andrewRose: 'Andrew Rose.jpg',
   antonetteWhitley: 'Antonette Whitley.jpeg',
+  bishopTreleven: 'Bishop Treleven.jpeg',
   carolBlagrove: 'Carol Blagrove.jpeg',
   christineCousins: 'Christine Cousins.jpg',
   christopherMcEwan: 'Christopher McEwan.jpeg',
   clarenceDuff: 'Clarence Duff.jpeg',
+  crystalChambers: 'Crystal Chambers.jpeg',
   davidSeverin: 'David Severin.jpeg',
   davidSmith: 'David Smith.jpeg',
   deborahSargean: 'Deborah Sargean.jpeg',
@@ -93,7 +96,9 @@ const peopleImages = {
   hibbertHamilton: 'Hibbert Hamilton.jpeg',
   howardGreen: 'Howard Green.jpeg',
   joannaNichol: 'Joanna Nichol.jpeg',
-  kendellHarrison: 'Kendell Harrison.jpg',
+  kandellHarrison: 'Kandell Harrison.jpg',
+  kedeisha: 'Kedeisha.jpeg',
+  kimberleyCameron: 'Kimberley Cameron.jpeg',
   latoyaGraham: 'Latoya Graham.jpeg',
   louisGeorge: 'Louis George.jpg',
   lydeaCousins: 'Lydea Cousins.jpeg',
@@ -111,6 +116,7 @@ const peopleImages = {
   praiseAndWorshipTeam: 'Praise and worship team.jpeg',
   prayerIcon: 'pray-1.png',
   rennaeByfield: 'Rennae Byfield.jpeg',
+  rhodaLeone: 'Rhoda Leone.jpeg',
   ricardoSeverin: 'Ricardo Severin.jpg',
   shawnWallace: 'Shawn Wallace.jpeg',
   skyJewels: 'Sky Jewels United Choir.jpg',
@@ -156,7 +162,7 @@ const scheduleData = {
       speaker: 'Deborah Sargeant & Rennae Byfield',
       role: 'Online Users only',
       icon: 'Video',
-      image: peopleImages.deborahSargean,
+      images: [peopleImages.deborahSargean, peopleImages.rennaeByfield],
       isInteractive: true,
       details: hostingDetails,
     },
@@ -280,7 +286,7 @@ const scheduleData = {
       speaker: 'Deborah Sargeant & Rennae Byfield',
       role: 'Online Users only',
       icon: 'MessageCircle',
-      image: peopleImages.rennaeByfield,
+      images: [peopleImages.deborahSargean, peopleImages.rennaeByfield],
       isInteractive: true,
       details: hostingDetails,
     },
@@ -425,6 +431,7 @@ const scheduleData = {
           title: 'Official Welcome and Address',
           speaker: 'Bishop Treleven',
           icon: 'Mic',
+          image: peopleImages.bishopTreleven,
           isInteractive: true,
         },
         {
@@ -528,9 +535,9 @@ const scheduleData = {
         },
         {
           title: 'Selection, Worship & Sermon',
-          speaker: 'Brampton Dancers & Kendell Harrison',
+          speaker: 'Brampton Dancers & Kandell Harrison',
           icon: 'Mic',
-          image: peopleImages.kendellHarrison,
+          image: peopleImages.kandellHarrison,
           isInteractive: true,
         },
         {
@@ -545,7 +552,7 @@ const scheduleData = {
     {
       title: 'Singspiration',
       time: '6:30 PM',
-      speaker: 'Venessa White & Kedeisha Mitchell',
+      speaker: 'Venessa White',
       role: 'Informal service of song and worship',
       icon: 'Music',
       image: peopleImages.vanessaWhite,
@@ -633,13 +640,15 @@ const scheduleData = {
         },
         {
           title: 'Praise & Worship',
-          speaker: 'Worship Team',
+          speaker: 'Sis. Alicia Rose',
           icon: 'Music',
+          image: peopleImages.aliciaRose,
         },
         {
           title: 'Discussion & Wrap-up',
           speaker: 'Sis. Rhoda Leone, Sis. Crystal Chambers, Sis. Kimberley Cameron',
           icon: 'Users',
+          images: [peopleImages.rhodaLeone, peopleImages.crystalChambers, peopleImages.kimberleyCameron],
           isInteractive: true,
         },
         {
@@ -663,7 +672,7 @@ const scheduleData = {
       speaker: 'Pastor Howard Green & Pastor Maurice Blagrove',
       role: 'Members only via Zoom',
       icon: 'Video',
-      image: peopleImages.howardGreen,
+      images: [peopleImages.howardGreen, peopleImages.mauriceBlagrove],
       isInteractive: true,
     },
     {
@@ -732,7 +741,7 @@ const scheduleData = {
       speaker: 'Shawn Wallace & Antonette Whitley-Scott',
       role: 'Online Users only',
       icon: 'Video',
-      image: peopleImages.shawnWallace,
+      images: [peopleImages.shawnWallace, peopleImages.antonetteWhitley],
       isInteractive: true,
       details: hostingDetails,
     },
@@ -748,18 +757,18 @@ const scheduleData = {
       details: 'Final evening service for Convention 2026.',
       items: [
         {
-          title: 'Praise and Worship, Prayer & Scripture',
+          title: 'Praise, Prayer & Scripture',
           speaker: 'Pastor Louis George & Sis. Marcia Gooden',
           role: 'Hymn #226 "Send the Light" | Matt 20:1-13',
           icon: 'BookOpen',
-          image: peopleImages.praiseAndWorshipTeam,
+          images: [peopleImages.louisGeorge],
           isInteractive: true,
         },
         {
           title: 'Official Welcome & Selection',
           speaker: 'Sis. Rhoda Leone & Sky Jewels United Choir',
           icon: 'Music',
-          image: peopleImages.skyJewels,
+          images: [peopleImages.rhodaLeone, peopleImages.skyJewels],
           isInteractive: true,
         },
         {
@@ -815,7 +824,7 @@ const scheduleData = {
       speaker: 'Shawn Wallace & Antonette Whitley-Scott',
       role: 'Online Users only',
       icon: 'MessageCircle',
-      image: peopleImages.antonetteWhitley,
+      images: [peopleImages.shawnWallace, peopleImages.antonetteWhitley],
       isInteractive: true,
       details: 'Official close of Convention 2026.',
     },
@@ -895,6 +904,7 @@ function IconRenderer({ name, color = colors.primaryBlue, size = 20 }) {
 
 function getCategory(entry) {
   const text = `${entry.title} ${entry.role || ''} ${entry.speaker || ''}`.toLowerCase();
+  const words = text.split(/\s+/);
 
   if (text.includes('gospel night') || text.includes('sermon')) return 'Sermon';
   if (text.includes('prayer') || text.includes('altar')) return 'Prayer';
@@ -920,10 +930,10 @@ function getCategory(entry) {
     return 'Teaching';
   }
 
-  if (text.includes('youth')) return 'Youth';
-  if (text.includes('children')) return 'Children';
-  if (/\bwomen'?s?\b/.test(text)) return 'Women';
-  if (/\bmen'?s?\b/.test(text)) return 'Men';
+  if (words.includes('youth') || words.includes("youth's")) return 'Youth';
+  if (words.includes('children') || words.includes("children's")) return 'Children';
+  if (words.includes('women') || words.includes("women's")) return 'Women';
+  if (words.includes('men') || words.includes("men's")) return 'Men';
   if (text.includes('offering')) return 'Offering';
   if (text.includes('video') || text.includes('hosting')) return 'Media';
   if (text.includes('vendor')) return 'Expo';
@@ -1145,7 +1155,6 @@ export default function App() {
   const [savedKeys, setSavedKeys] = useState([]);
   const [now, setNow] = useState(new Date());
   const navScrollRef = useRef(null);
-  const [showNavHint, setShowNavHint] = useState(true);
   const [navScrollState, setNavScrollState] = useState({
     left: false,
     right: true,
@@ -1162,18 +1171,6 @@ export default function App() {
       right: el.scrollLeft < maxScrollLeft - 8,
     });
   }, []);
-
-  useEffect(() => {
-    if (showOverlay) return;
-
-    setShowNavHint(true);
-
-    const timer = setTimeout(() => {
-      setShowNavHint(false);
-    }, 7000);
-
-    return () => clearTimeout(timer);
-  }, [showOverlay]);
 
   useEffect(() => {
     if (showOverlay) return;
@@ -1215,7 +1212,6 @@ export default function App() {
 
   const handleNavScroll = () => {
     updateNavScrollState();
-    setShowNavHint(false);
   };
 
   useEffect(() => {
@@ -1283,14 +1279,6 @@ export default function App() {
   );
 
   const handleTabSelect = (tab) => {
-    if (tab === 'home') {
-      setShowOverlay(true);
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 10);
-      return;
-    }
-
     if (tab === activeTab && !showOverlay) return;
     setActiveTab(tab);
     setShowOverlay(false);
@@ -1330,7 +1318,6 @@ export default function App() {
   };
 
   const navItems = [
-    { id: 'home', label: 'Home', icon: <Home size={22} /> },
     { id: 'message', label: 'Message', icon: <ScrollText size={22} /> },
     { id: 'friday', label: 'Friday', icon: <Calendar size={22} /> },
     { id: 'saturday', label: 'Saturday', icon: <Calendar size={22} /> },
@@ -1501,6 +1488,7 @@ export default function App() {
   ) => {
     const isSaved = savedKeys.includes(keyValue);
     const clickable = Boolean(event.isInteractive || event.details || event.link);
+    const imagesList = event.images || (event.image ? [event.image] : []);
 
     return (
       <div
@@ -1515,18 +1503,22 @@ export default function App() {
           }`}
         >
           <div className="relative z-10 flex items-start gap-4">
-            <div
-              className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 bg-cover bg-center border border-gray-100 shadow-sm"
-              style={
-                event.image
-                  ? { backgroundImage: `url("${asset(event.image)}")` }
-                  : { backgroundColor: `${colors.gold}20` }
-              }
-            >
-              {!event.image && (
+            
+            {imagesList.length > 0 ? (
+              <div className={`flex ${imagesList.length > 1 ? '-space-x-4' : ''} flex-shrink-0`}>
+                {imagesList.slice(0, 3).map((img, i) => (
+                  <div
+                    key={i}
+                    className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 bg-cover bg-center shadow-sm relative ${imagesList.length > 1 ? 'border-2 border-white' : 'border border-gray-100'}`}
+                    style={{ backgroundImage: `url("${asset(img)}")`, zIndex: 10 - i }}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 border border-gray-100 shadow-sm" style={{ backgroundColor: `${colors.gold}20` }}>
                 <IconRenderer name={event.icon} color={colors.primaryBlue} size={22} />
-              )}
-            </div>
+              </div>
+            )}
 
             <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -1593,6 +1585,7 @@ export default function App() {
 
   const renderSectionCard = (section, day, index, keyValue) => {
     const isSaved = savedKeys.includes(keyValue);
+    const imagesList = section.images || (section.image ? [section.image] : []);
 
     return (
       <div
@@ -1651,18 +1644,22 @@ export default function App() {
             )}
 
             <div className="mt-5 flex items-center gap-4">
-              <div
-                className="w-16 h-16 rounded-2xl bg-cover bg-center border-2 border-white/30 shadow-lg flex-shrink-0 flex items-center justify-center"
-                style={
-                  section.image
-                    ? { backgroundImage: `url("${asset(section.image)}")` }
-                    : { backgroundColor: 'rgba(255,255,255,0.12)' }
-                }
-              >
-                {!section.image && (
+              
+              {imagesList.length > 0 ? (
+                <div className={`flex ${imagesList.length > 1 ? '-space-x-4' : ''} flex-shrink-0`}>
+                  {imagesList.slice(0, 3).map((img, i) => (
+                    <div
+                      key={i}
+                      className="w-16 h-16 rounded-2xl bg-cover bg-center border-2 border-white/30 shadow-lg relative"
+                      style={{ backgroundImage: `url("${asset(img)}")`, zIndex: 10 - i }}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="w-16 h-16 rounded-2xl border-2 border-white/30 shadow-lg flex-shrink-0 flex items-center justify-center" style={{ backgroundColor: 'rgba(255,255,255,0.12)' }}>
                   <IconRenderer name={section.icon} color={colors.gold} size={28} />
-                )}
-              </div>
+                </div>
+              )}
 
               <div>
                 {section.speaker && (
@@ -1705,6 +1702,7 @@ export default function App() {
     const category = getCategory(event);
     const categoryStyle = getCategoryStyle(category);
     const clickable = Boolean(event.isInteractive || event.details || event.link);
+    const imagesList = event.images || (event.image ? [event.image] : []);
 
     return (
       <div
@@ -1721,18 +1719,22 @@ export default function App() {
           <div className="absolute -right-16 -top-16 w-40 h-40 rounded-full bg-[#cb9d44]/10 blur-2xl"></div>
 
           <div className="relative z-10 flex items-start gap-4">
-            <div
-              className="w-16 h-16 rounded-2xl bg-cover bg-center border border-gray-100 shadow-sm flex-shrink-0 flex items-center justify-center"
-              style={
-                event.image
-                  ? { backgroundImage: `url("${asset(event.image)}")` }
-                  : { backgroundColor: `${colors.gold}20` }
-              }
-            >
-              {!event.image && (
+            
+            {imagesList.length > 0 ? (
+              <div className={`flex ${imagesList.length > 1 ? '-space-x-4' : ''} flex-shrink-0`}>
+                {imagesList.slice(0, 3).map((img, i) => (
+                  <div
+                    key={i}
+                    className={`w-16 h-16 rounded-2xl bg-cover bg-center shadow-sm relative ${imagesList.length > 1 ? 'border-2 border-white' : 'border border-gray-100'}`}
+                    style={{ backgroundImage: `url("${asset(img)}")`, zIndex: 10 - i }}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="w-16 h-16 rounded-2xl border border-gray-100 shadow-sm flex-shrink-0 flex items-center justify-center" style={{ backgroundColor: `${colors.gold}20` }}>
                 <IconRenderer name={event.icon} color={colors.primaryBlue} size={26} />
-              )}
-            </div>
+              </div>
+            )}
 
             <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -2518,55 +2520,55 @@ export default function App() {
 
       {/* Navigation Footer */}
       {!showOverlay && (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 md:sticky md:top-0 md:bottom-auto">
-          <div className="relative max-w-2xl mx-auto md:max-w-full">
-            {/* Soft overlap shadow so users know the footer is layered over the content */}
-            <div className="pointer-events-none absolute -top-14 left-0 right-0 h-16 bg-gradient-to-t from-[#111b2e]/10 to-transparent md:hidden"></div>
+        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/85 backdrop-blur-xl shadow-[0_-10px_30px_rgba(0,0,0,0.08)] border-t border-white/50 md:sticky md:top-0 md:shadow-sm overflow-x-auto styled-scrollbar md:pb-0 pb-safe relative">
+          
+          <div className="max-w-2xl mx-auto flex items-center justify-start md:justify-between gap-1 sm:gap-2 px-3 md:px-0 relative z-0 pb-1.5 md:pb-0 min-w-max">
+            {navItems.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => handleTabSelect(tab.id)}
+                className={`flex flex-col items-center justify-center w-[4.5rem] sm:w-[5rem] py-3 md:py-4 gap-1 md:flex-row md:w-auto md:px-6 transition-all relative shrink-0 ${
+                  activeTab === tab.id
+                    ? 'text-[#0f1a82]'
+                    : 'text-gray-400 hover:text-gray-600'
+                }`}
+              >
+                <div
+                  className={`transition-transform duration-300 ${
+                    activeTab === tab.id ? 'scale-110 md:scale-100' : 'scale-100'
+                  }`}
+                >
+                  {tab.icon}
+                </div>
 
-            <div
-              ref={navScrollRef}
-              onScroll={handleNavScroll}
-              className="footer-nav-scroll relative overflow-x-auto bg-[#111b2e]/95 text-white backdrop-blur-xl shadow-[0_-18px_45px_rgba(17,27,46,0.35)] border-t border-[#cb9d44]/35 rounded-t-[1.75rem] md:rounded-none md:bg-white/90 md:text-[#111b2e] md:shadow-sm md:border-gray-100"
+                <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-wide md:tracking-widest font-bold whitespace-nowrap">
+                  {tab.label}
+                </span>
+
+                {tab.id === 'saved' && savedKeys.length > 0 && (
+                  <span className="absolute top-2 right-3 md:right-2 w-5 h-5 rounded-full bg-[#c4442b] text-white text-[10px] font-extrabold flex items-center justify-center">
+                    {savedKeys.length}
+                  </span>
+                )}
+
+                {activeTab === tab.id && (
+                  <div className="absolute top-0 md:bottom-0 md:top-auto left-1/2 -translate-x-1/2 md:translate-x-0 md:left-0 md:right-0 w-8 md:w-full h-1 bg-[#cb9d44] rounded-b-full md:rounded-t-full md:rounded-b-none shadow-[0_2px_10px_rgba(203,157,68,0.5)] md:shadow-[0_-2px_10px_rgba(203,157,68,0.5)]"></div>
+                )}
+              </button>
+            ))}
+            
+            {/* Adding Home Button directly into the navigation bar! */}
+            <button
+              onClick={() => setShowOverlay(true)}
+              className="flex flex-col items-center justify-center w-[4.5rem] sm:w-[5rem] py-3 md:py-4 gap-1 md:flex-row md:w-auto md:px-6 transition-all relative shrink-0 text-[#a3612b] hover:text-[#7d5432]"
             >
-              <div className="max-w-2xl mx-auto flex items-center justify-start md:justify-between gap-1 sm:gap-2 px-5 md:px-0 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.65rem)] md:py-0 min-w-max">
-                {navItems.map((tab) => (
-                  <button
-                    key={tab.id}
-                    data-nav-id={tab.id}
-                    onClick={() => {
-                      handleTabSelect(tab.id);
-                    }}
-                    className={`flex flex-col items-center justify-center w-[4.4rem] sm:w-[4.8rem] py-3 md:py-4 gap-1 md:flex-row md:w-auto md:px-6 transition-all relative shrink-0 rounded-2xl md:rounded-none ${
-                      activeTab === tab.id
-                        ? 'text-[#cb9d44] bg-white/10 md:bg-transparent md:text-[#0f1a82]'
-                        : 'text-white/55 hover:text-white md:text-gray-400 md:hover:text-gray-600'
-                    }`}
-                  >
-                    <div
-                      className={`transition-transform duration-300 ${
-                        activeTab === tab.id ? 'scale-110 md:scale-100' : 'scale-100'
-                      }`}
-                    >
-                      {tab.icon}
-                    </div>
-
-                    <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-wide md:tracking-widest font-bold whitespace-nowrap">
-                      {tab.label}
-                    </span>
-
-                    {tab.id === 'saved' && savedKeys.length > 0 && (
-                      <span className="absolute top-2 right-3 md:right-2 w-5 h-5 rounded-full bg-[#c4442b] text-white text-[10px] font-extrabold flex items-center justify-center">
-                        {savedKeys.length}
-                      </span>
-                    )}
-
-                    {activeTab === tab.id && (
-                      <div className="absolute top-0 md:bottom-0 md:top-auto left-1/2 -translate-x-1/2 md:translate-x-0 md:left-0 md:right-0 w-8 md:w-full h-1 bg-[#cb9d44] rounded-b-full md:rounded-t-full md:rounded-b-none shadow-[0_2px_10px_rgba(203,157,68,0.6)] md:shadow-[0_-2px_10px_rgba(203,157,68,0.5)]"></div>
-                    )}
-                  </button>
-                ))}
+              <div className="transition-transform duration-300 scale-100">
+                <Home size={22} />
               </div>
-            </div>
+              <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-wide md:tracking-widest font-bold whitespace-nowrap">
+                Home
+              </span>
+            </button>
           </div>
         </nav>
       )}
@@ -2589,16 +2591,30 @@ export default function App() {
 
             {/* Compact Header Layout */}
             <div className="px-6 pt-8 pb-5 bg-white border-b border-gray-100 flex items-start gap-5">
-              {modalData.image ? (
-                <div 
-                  className="w-20 h-20 rounded-2xl bg-cover bg-center shadow-sm flex-shrink-0 border border-gray-100 mt-1" 
-                  style={{backgroundImage: `url("${asset(modalData.image)}")`}}
-                />
-              ) : (
-                <div className="w-20 h-20 rounded-2xl flex items-center justify-center bg-[#cb9d44]/15 border border-[#cb9d44]/30 flex-shrink-0 mt-1">
-                  <IconRenderer name={modalData.icon} color={colors.gold} size={32} />
-                </div>
-              )}
+              
+              {(() => {
+                const modalImagesList = modalData.images || (modalData.image ? [modalData.image] : []);
+                
+                if (modalImagesList.length > 0) {
+                  return (
+                    <div className={`flex ${modalImagesList.length > 1 ? '-space-x-5' : ''} flex-shrink-0 mt-1`}>
+                      {modalImagesList.slice(0, 3).map((img, i) => (
+                        <div 
+                          key={i}
+                          className={`w-20 h-20 rounded-2xl bg-cover bg-center shadow-sm relative ${modalImagesList.length > 1 ? 'border-2 border-white' : 'border border-gray-100'}`} 
+                          style={{ backgroundImage: `url("${asset(img)}")`, zIndex: 10 - i }}
+                        />
+                      ))}
+                    </div>
+                  );
+                }
+                
+                return (
+                  <div className="w-20 h-20 rounded-2xl flex items-center justify-center bg-[#cb9d44]/15 border border-[#cb9d44]/30 flex-shrink-0 mt-1">
+                    <IconRenderer name={modalData.icon} color={colors.gold} size={32} />
+                  </div>
+                );
+              })()}
               
               <div className="flex-1 min-w-0 pr-8">
                 {modalData.time && (
@@ -2725,8 +2741,8 @@ export default function App() {
 
             /* Sleek, context-aware scrollbars for horizontal overflows */
             .styled-scrollbar::-webkit-scrollbar {
-              height: 4px;
-              width: 4px;
+              height: 5px;
+              width: 5px;
             }
 
             .styled-scrollbar::-webkit-scrollbar-track {
@@ -2740,42 +2756,6 @@ export default function App() {
 
             .styled-scrollbar::-webkit-scrollbar-thumb:hover {
               background-color: rgba(203, 157, 68, 0.7);
-            }
-
-            /* Darker, more obvious footer nav scrollbar */
-            .footer-nav-scroll {
-              scrollbar-width: thin;
-              scrollbar-color: rgba(203, 157, 68, 0.95) rgba(17, 27, 46, 0.75);
-            }
-
-            .footer-nav-scroll::-webkit-scrollbar {
-              height: 7px;
-            }
-
-            .footer-nav-scroll::-webkit-scrollbar-track {
-              background: rgba(17, 27, 46, 0.75);
-              border-radius: 999px;
-              margin: 0 48px;
-            }
-
-            .footer-nav-scroll::-webkit-scrollbar-thumb {
-              background: rgba(203, 157, 68, 0.95);
-              border-radius: 999px;
-              border: 2px solid rgba(17, 27, 46, 0.85);
-            }
-
-            .footer-nav-scroll::-webkit-scrollbar-thumb:hover {
-              background: rgba(231, 180, 44, 1);
-            }
-
-            @media (min-width: 768px) {
-              .footer-nav-scroll {
-                scrollbar-width: none;
-              }
-
-              .footer-nav-scroll::-webkit-scrollbar {
-                display: none;
-              }
             }
 
             .no-scrollbar::-webkit-scrollbar {
