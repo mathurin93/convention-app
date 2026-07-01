@@ -79,48 +79,38 @@ const asset = (file) => {
 };
 
 const peopleImages = {
-  aliciaRose: 'Alicia Rose.jpeg',
-  andrewRose: 'Andrew Rose.jpg',
   antonetteWhitley: 'Antonette Whitley.jpeg',
-  bishopTreleven: 'Bishop Treleven.jpeg',
   carolBlagrove: 'Carol Blagrove.jpeg',
-  christineCousins: 'Christine Cousins.jpg',
+  chrisDuff: 'Chris Duff.jpeg',
   christopherMcEwan: 'Christopher McEwan.jpeg',
   clarenceDuff: 'Clarence Duff.jpeg',
-  crystalChambers: 'Crystal Chambers.jpeg',
   davidSeverin: 'David Severin.jpeg',
   davidSmith: 'David Smith.jpeg',
   deborahSargean: 'Deborah Sargean.jpeg',
+  dionMitchell: 'Dion Mitchell.jpeg',
   flyer: 'flyer.jpg',
   gervainEdwards: 'Gervain Edwards.jpeg',
   hibbertHamilton: 'Hibbert Hamilton.jpeg',
   howardGreen: 'Howard Green.jpeg',
-  joannaNichol: 'Joanna Nichol.jpeg',
+  joannaNichol: 'JoannaNichol.jpeg',
   kandellHarrison: 'Kandell Harrison.jpg',
-  kedeisha: 'Kedeisha.jpeg',
-  kimberleyCameron: 'Kimberley Cameron.jpeg',
+  kedeisha: 'Kedeisha Mitchell.jpeg',
   latoyaGraham: 'Latoya Graham.jpeg',
-  louisGeorge: 'Louis George.jpg',
   lydeaCousins: 'Lydea Cousins.jpeg',
   markHibbert: 'Mark Hibbert.jpeg',
-  marlonPalmer: 'Marlon Palmer.jpg',
   mattTrillChambers: 'Matt-Trill Chambers.jpeg',
   mauriceBlagrove: 'Maurice Blagrove.jpeg',
   me: 'me.jpg',
-  melletaBrown: 'Meletta Brown.jpg',
   michaelHall: 'Michael Hall.jpeg',
   mrFranklinFala: 'Mr. Franklin Fala.jpeg',
   mrOmariRhoden: 'Mr. Omari Rhoden.jpeg',
   nadiaLake: 'Nadia lake.jpeg',
-  pastorHines: 'Pastor Hines.jpg',
   praiseAndWorshipTeam: 'Praise and worship team.jpeg',
   prayerIcon: 'pray-1.png',
   rennaeByfield: 'Rennae Byfield.jpeg',
-  rhodaLeone: 'Rhoda Leone.jpeg',
-  ricardoSeverin: 'Ricardo Severin.jpg',
   shawnWallace: 'Shawn Wallace.jpeg',
   skyJewels: 'Sky Jewels United Choir.jpg',
-  vanessaWhite: 'Vanessa White.jpg',
+  vendor: 'Vendor.png',
 };
 
 const developerData = {
@@ -392,7 +382,7 @@ const scheduleData = {
       speaker: 'Chris Duff & Lydea Cousins',
       role: 'Online Users only',
       icon: 'Video',
-      image: peopleImages.lydeaCousins,
+      images: [peopleImages.chrisDuff, peopleImages.lydeaCousins],
       isInteractive: true,
       details: hostingDetails,
     },
@@ -417,6 +407,7 @@ const scheduleData = {
           title: 'Opening Prayer',
           speaker: 'Pastor Dion Mitchell',
           icon: 'PrayingHands',
+          image: peopleImages.dionMitchell,
           isInteractive: true,
         },
         {
@@ -490,8 +481,18 @@ const scheduleData = {
       ],
     },
     {
+      title: 'Post-Service Hosting',
+      time: '3:00 PM - 3:15 PM',
+      speaker: 'Chris Duff & Lydea Cousins',
+      role: 'Online Users only',
+      icon: 'MessageCircle',
+      images: [peopleImages.chrisDuff, peopleImages.lydeaCousins],
+      isInteractive: true,
+      details: hostingDetails,
+    },
+    {
       title: 'Lunch',
-      time: '3:00 PM - 4:30 PM',
+      time: '3:15 PM - 4:30 PM',
       speaker: 'Lunchroom',
       role: 'Waves for elderly, visitors, and public',
       icon: 'Coffee',
@@ -640,9 +641,10 @@ const scheduleData = {
         },
         {
           title: 'Praise & Worship',
-          speaker: 'Sis. Alicia Rose',
+          speaker: 'Sis. Alicia Rose & Kedeisha Mitchell',
           icon: 'Music',
-          image: peopleImages.aliciaRose,
+          images: [peopleImages.aliciaRose, peopleImages.kedeisha],
+          isInteractive: true,
         },
         {
           title: 'Discussion & Wrap-up',
@@ -682,6 +684,7 @@ const scheduleData = {
       role:
         'All are welcome to discover the various goods and services being sold by Vendors within and outside the Church of God Sabbath-Keeping Organization.',
       icon: 'Info',
+      image: peopleImages.vendor,
       isInteractive: true,
     },
     {
@@ -757,7 +760,7 @@ const scheduleData = {
       details: 'Final evening service for Convention 2026.',
       items: [
         {
-          title: 'Praise, Prayer & Scripture',
+          title: 'Praise and Worship, Prayer & Scripture',
           speaker: 'Pastor Louis George & Sis. Marcia Gooden',
           role: 'Hymn #226 "Send the Light" | Matt 20:1-13',
           icon: 'BookOpen',
@@ -768,7 +771,7 @@ const scheduleData = {
           title: 'Official Welcome & Selection',
           speaker: 'Sis. Rhoda Leone & Sky Jewels United Choir',
           icon: 'Music',
-          images: [peopleImages.rhodaLeone, peopleImages.skyJewels],
+          image: peopleImages.skyJewels,
           isInteractive: true,
         },
         {
@@ -1332,6 +1335,7 @@ export default function App() {
   };
 
   const navItems = [
+    { id: 'home', label: 'Home', icon: <Home size={22} /> },
     { id: 'message', label: 'Message', icon: <ScrollText size={22} /> },
     { id: 'friday', label: 'Friday', icon: <Calendar size={22} /> },
     { id: 'saturday', label: 'Saturday', icon: <Calendar size={22} /> },
@@ -2579,18 +2583,22 @@ export default function App() {
                     key={tab.id}
                     data-nav-id={tab.id}
                     onClick={() => {
-                      setShowNavHint(false);
-                      handleTabSelect(tab.id);
+                      if (tab.id === 'home') {
+                        setShowOverlay(true);
+                      } else {
+                        setShowNavHint(false);
+                        handleTabSelect(tab.id);
+                      }
                     }}
                     className={`flex flex-col items-center justify-center w-[4.6rem] sm:w-[5rem] py-3 md:py-4 gap-1 md:flex-row md:w-auto md:px-6 transition-all relative shrink-0 rounded-2xl md:rounded-none ${
-                      activeTab === tab.id
+                      activeTab === tab.id && tab.id !== 'home'
                         ? 'text-[#cb9d44] bg-white/10 md:bg-transparent md:text-[#0f1a82]'
                         : 'text-white/55 hover:text-white md:text-gray-400 md:hover:text-gray-600'
                     }`}
                   >
                     <div
                       className={`transition-transform duration-300 ${
-                        activeTab === tab.id ? 'scale-110 md:scale-100' : 'scale-100'
+                        activeTab === tab.id && tab.id !== 'home' ? 'scale-110 md:scale-100' : 'scale-100'
                       }`}
                     >
                       {tab.icon}
@@ -2606,23 +2614,11 @@ export default function App() {
                       </span>
                     )}
 
-                    {activeTab === tab.id && (
+                    {activeTab === tab.id && tab.id !== 'home' && (
                       <div className="absolute top-0 md:bottom-0 md:top-auto left-1/2 -translate-x-1/2 md:translate-x-0 md:left-0 md:right-0 w-8 md:w-full h-1 bg-[#cb9d44] rounded-b-full md:rounded-t-full md:rounded-b-none shadow-[0_2px_10px_rgba(203,157,68,0.6)] md:shadow-[0_-2px_10px_rgba(203,157,68,0.5)]"></div>
                     )}
                   </button>
                 ))}
-
-                <button
-                  onClick={() => setShowOverlay(true)}
-                  className="flex flex-col items-center justify-center w-[4.6rem] sm:w-[5rem] py-3 md:py-4 gap-1 md:flex-row md:w-auto md:px-6 transition-all relative shrink-0 rounded-2xl md:rounded-none text-white/55 hover:text-white md:text-[#a3612b] md:hover:text-[#7d5432]"
-                >
-                  <div className="transition-transform duration-300 scale-100">
-                    <Home size={22} />
-                  </div>
-                  <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-wide md:tracking-widest font-bold whitespace-nowrap">
-                    Home
-                  </span>
-                </button>
               </div>
             </div>
           </div>
@@ -2646,18 +2642,18 @@ export default function App() {
             </button>
 
             {/* Compact Header Layout */}
-            <div className="px-6 pt-8 pb-5 bg-white border-b border-gray-100 flex items-start gap-5">
+            <div className="px-6 pt-8 pb-5 bg-white border-b border-gray-100 flex items-start gap-4 sm:gap-5">
               
               {(() => {
                 const modalImagesList = modalData.images || (modalData.image ? [modalData.image] : []);
                 
                 if (modalImagesList.length > 0) {
                   return (
-                    <div className={`flex ${modalImagesList.length > 1 ? '-space-x-5' : ''} flex-shrink-0 mt-1`}>
+                    <div className={`flex ${modalImagesList.length > 1 ? '-space-x-3' : ''} flex-shrink-0 mt-1`}>
                       {modalImagesList.slice(0, 3).map((img, i) => (
                         <div 
                           key={i}
-                          className={`w-20 h-20 rounded-2xl bg-cover bg-center shadow-sm relative ${modalImagesList.length > 1 ? 'border-2 border-white' : 'border border-gray-100'}`} 
+                          className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-cover bg-center shadow-sm relative ${modalImagesList.length > 1 ? 'border-2 border-white' : 'border border-gray-100'}`} 
                           style={{ backgroundImage: `url("${asset(img)}")`, zIndex: 10 - i }}
                         />
                       ))}
@@ -2666,13 +2662,13 @@ export default function App() {
                 }
                 
                 return (
-                  <div className="w-20 h-20 rounded-2xl flex items-center justify-center bg-[#cb9d44]/15 border border-[#cb9d44]/30 flex-shrink-0 mt-1">
-                    <IconRenderer name={modalData.icon} color={colors.gold} size={32} />
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center bg-[#cb9d44]/15 border border-[#cb9d44]/30 flex-shrink-0 mt-1">
+                    <IconRenderer name={modalData.icon} color={colors.gold} size={28} />
                   </div>
                 );
               })()}
               
-              <div className="flex-1 min-w-0 pr-8">
+              <div className="flex-1 min-w-0 pr-2 sm:pr-8">
                 {modalData.time && (
                   <p className="text-[10px] uppercase tracking-widest font-extrabold mb-1.5 text-[#cb9d44]">
                     {modalData.time}
