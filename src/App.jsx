@@ -126,6 +126,72 @@ const peopleImages = {
   vendor: 'Vendor.png',
 };
 
+
+const imageLabels = {
+  [peopleImages.aliciaRose]: 'Sis. Alicia Rose',
+  [peopleImages.andrewRose]: 'Minister Andrew Rose',
+  [peopleImages.antonetteWhitley]: 'Antonette Whitley-Scott',
+  [peopleImages.bishopTreleven]: 'Bishop Treleven',
+  [peopleImages.carolBlagrove]: 'Sis. Carol Blagrove',
+  [peopleImages.chrisDuff]: 'Chris Duff',
+  [peopleImages.christineCousins]: 'Sis. Christine Cousins',
+  [peopleImages.christopherMcEwan]: 'Pastor Christopher McEwan',
+  [peopleImages.clarenceDuff]: 'Pastor Clarence Duff',
+  [peopleImages.crystalChambers]: 'Sis. Crystal Chambers',
+  [peopleImages.davidSeverin]: 'Pastor David Severin',
+  [peopleImages.davidSmith]: 'Bro. David Smith',
+  [peopleImages.deborahSargean]: 'Deborah Sargeant',
+  [peopleImages.dionMitchell]: 'Pastor Dion Mitchell',
+  [peopleImages.flyer]: 'Convention Flyer',
+  [peopleImages.gervainEdwards]: 'Gervain Edwards',
+  [peopleImages.hibbertHamilton]: 'Pastor Hibbert Hamilton',
+  [peopleImages.howardGreen]: 'Pastor Howard Green',
+  [peopleImages.joannaNichol]: 'Sis. Joanna Nichol',
+  [peopleImages.kandellHarrison]: 'Kendall Harrison',
+  [peopleImages.kedeisha]: 'Sis. Kedeisha Mitchell',
+  [peopleImages.kimberleyCameron]: 'Sis. Kimberley Cameron',
+  [peopleImages.latoyaGraham]: 'Sis. Latoya Graham',
+  [peopleImages.louisGeorge]: 'Pastor Louis George',
+  [peopleImages.lydeaCousins]: 'Lydea Cousins',
+  [peopleImages.markHibbert]: 'Pastor Mark Hibbert',
+  [peopleImages.marlonPalmer]: 'Bro. Marlon Palmer',
+  [peopleImages.mattTrillChambers]: 'Minister Matt-Trill Chambers',
+  [peopleImages.mauriceBlagrove]: 'Pastor Maurice Blagrove',
+  [peopleImages.me]: 'Bro. Matt Robinson',
+  [peopleImages.melletaBrown]: 'Sis. Melleta Brown',
+  [peopleImages.michaelHall]: 'Minister Michael Hall',
+  [peopleImages.mrFranklinFala]: 'Mr. Franklin Fala',
+  [peopleImages.mrOmariRhoden]: 'Mr. Omari Rhoden',
+  [peopleImages.nadiaLake]: 'Sis. Nadia Lake',
+  [peopleImages.pastorHines]: 'Pastor Hines',
+  [peopleImages.praiseAndWorshipTeam]: 'Praise & Worship Team',
+  [peopleImages.rennaeByfield]: 'Rennae Byfield',
+  [peopleImages.rhodaLeone]: 'Sis. Rhoda Leone',
+  [peopleImages.ricardoSeverin]: 'Pastor Ricardo Severin',
+  [peopleImages.shawnWallace]: 'Shawn Wallace',
+  [peopleImages.skyJewels]: 'Sky Jewels United Choir',
+  [peopleImages.vanessaWhite]: 'Venessa White',
+  [peopleImages.vendor]: 'Vendor Booth Expo',
+};
+
+function getImageLabel(file) {
+  if (!file) return 'Image';
+  if (imageLabels[file]) return imageLabels[file];
+
+  const baseName = String(file)
+    .split('/')
+    .pop()
+    .replace(/\.[^/.]+$/, '')
+    .replace(/[-_]+/g, ' ')
+    .trim();
+
+  return baseName.replace(/\w\S*/g, (word) => {
+    const lower = word.toLowerCase();
+    if (['and', 'of', 'the'].includes(lower)) return lower;
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  });
+}
+
 const developerData = {
   title: 'App Creator',
   speaker: 'Bro. Matt Robinson',
@@ -2697,19 +2763,20 @@ export default function App() {
 
       {/* Larger Image-Friendly Modal Design */}
 {modalData && (
-  <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5">
+  <div className="fixed inset-0 z-[100] overflow-y-auto styled-scrollbar p-3 sm:p-5">
     <div
-      className="absolute inset-0 bg-[#111b2e]/75 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 bg-[#111b2e]/75 backdrop-blur-sm animate-fade-in"
       onClick={closeModal}
     ></div>
 
+    <div className="relative min-h-full flex items-start md:items-center justify-center py-4">
     {(() => {
       const modalImagesList = modalData.images || (modalData.image ? [modalData.image] : []);
       const hasImages = modalImagesList.length > 0;
 
       return (
         <div
-          className={`bg-white rounded-[2rem] w-full overflow-hidden relative shadow-2xl animate-scale-in max-h-[92vh] ${
+          className={`bg-white rounded-[2rem] w-full overflow-hidden relative shadow-2xl animate-scale-in max-h-none md:max-h-[92vh] ${
             hasImages
               ? 'max-w-5xl md:grid md:grid-cols-[1.15fr_0.85fr]'
               : 'max-w-md flex flex-col'
@@ -2723,7 +2790,7 @@ export default function App() {
           </button>
 
           {hasImages ? (
-            <div className="bg-[#111b2e] p-3 sm:p-4 overflow-y-auto max-h-[45vh] md:max-h-[92vh] styled-scrollbar">
+            <div className="bg-[#111b2e] p-3 sm:p-4 md:overflow-y-auto md:max-h-[92vh] styled-scrollbar">
               <div
                 className={`grid gap-3 ${
                   modalImagesList.length === 1
@@ -2746,11 +2813,9 @@ export default function App() {
                       }`}
                     />
 
-                    {modalImagesList.length > 1 && (
-                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#111b2e]/75 text-white text-[10px] font-extrabold tracking-widest uppercase backdrop-blur-sm">
-                        Image {i + 1} of {modalImagesList.slice(0, 3).length}
-                      </div>
-                    )}
+                    <div className="absolute top-3 left-3 max-w-[calc(100%-1.5rem)] px-3 py-1 rounded-full bg-[#111b2e]/75 text-white text-[10px] font-extrabold tracking-widest uppercase backdrop-blur-sm truncate">
+                      {getImageLabel(img)}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -2787,7 +2852,7 @@ export default function App() {
             </div>
           )}
 
-          <div className="flex flex-col max-h-[92vh] overflow-y-auto bg-gray-50/50 styled-scrollbar">
+          <div className="flex flex-col bg-gray-50/50 md:max-h-[92vh] md:overflow-y-auto styled-scrollbar">
             {hasImages && (
               <div className="px-6 sm:px-7 pt-8 pb-5 bg-white border-b border-gray-100">
                 {modalData.time && (
@@ -2869,6 +2934,7 @@ export default function App() {
         </div>
       );
     })()}
+    </div>
   </div>
 )}
 
